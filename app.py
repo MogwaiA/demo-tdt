@@ -120,7 +120,7 @@ if st.button("Visualiser"):
             custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
             color_scale = folium.LinearColormap(custom_colors, vmin=minmmi, vmax=maxmmi)
 
-            sites = df[['Longitude','Latitude']].sample(frac=5/df.shape[0], random_state=42)
+            
 
             # Ajouter les cercles colorés
             for index, row in sampled_df.iterrows():
@@ -136,14 +136,6 @@ if st.button("Visualiser"):
                     fill_opacity=0.01,
                 ).add_to(world_map)
 
-            for index, row in sites.iterrows():
-                lat = row["Latitude"]
-                lon = row["Longitude"]
-                folium.Marker(
-                    location=(lat, lon),
-                    popup='Site',
-                    icon=folium.Icon(color='darkred',prefix='fa')
-                ).add_to(world_map)
 
             # Charger l'application Streamlit
             st.title(title)
@@ -154,6 +146,19 @@ if st.button("Visualiser"):
 
             # Afficher la carte Folium dans Streamlit
             folium_static(world_map)
+
+            # Ajouter un widget de saisie de coordonnées
+            latitude_input = st.number_input("Latitude du point :", min_value=-90.0, max_value=90.0)
+            longitude_input = st.number_input("Longitude du point :", min_value=-180.0, max_value=180.0)
+            nom_site = st.number_input("Nom du site :", "")
+
+            # Ajouter un bouton pour ajouter le point à la carte
+            if st.button("Ajouter le point"):
+                folium.Marker(
+                    location=[latitude_input, longitude_input],
+                    popup=nom_site,
+                    icon=folium.Icon(color='blue', prefix='fa', icon='circle')
+                ).add_to(world_map)
             
 
         else:
