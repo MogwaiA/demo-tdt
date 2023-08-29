@@ -83,7 +83,7 @@ seisme_id = st.text_input("Entrez l'ID du séisme :", 'hv73287947')  # Valeur pa
 # Ajouter un bouton pour démarrer la visualisation
 if st.button("Visualiser"):
     event = link_xml_event(seisme_id)
-    if df is not None:
+    if event is not None:
 
         xml_file_path=event[0]
         title=event[1]
