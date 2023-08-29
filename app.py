@@ -159,4 +159,4 @@ if st.button("Visualiser"):
         else:
             st.warning("Les informations sur les MMI et les impacts du séisme ne sont pas disponibles.")
     else:
-        st.warning("L'évènemenent demandé est inconnu".")
+        st.warning("L'évènemenent demandé est inconnu.")
