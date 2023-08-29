@@ -62,7 +62,7 @@ def link_xml_event(id, proxies=None):
     try: 
         response = requests.get(url, proxies=proxies)
         url = json.loads(response.text)['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
-    return url
+        return url
 
 # Charger l'application Streamlit
 st.title("Carte de Sismicité")
