@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 import os
 import folium
 import requests
+import json
 
 # Fonction pour parser le fichier XML et obtenir le DataFrame
 def parse_file_grid_xml(xml_file_path):
@@ -57,15 +58,21 @@ def parse_link_grid_xml(lien_grid_xml,proxies=None):
         return None
 
 
+
 def link_xml_event(id, proxies=None):
     url = f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid={id}"
-    try: 
+    try:
         response = requests.get(url, proxies=proxies)
-        url = json.loads(response.text)['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
+        response.raise_for_status()  # Lève une exception si la requête échoue
+        data = response.json()  # Convertir la réponse JSON en dictionnaire
+
+        # Accéder aux informations nécessaires dans la structure JSON
+        url = data['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
         return url
+    except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
+        return None
 
 # Charger l'application Streamlit
-
 st.title("Carte de Sismicité")
 st.subheader("Visualisation des données de sismicité")
 
