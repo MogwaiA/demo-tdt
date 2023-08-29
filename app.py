@@ -111,7 +111,7 @@ if st.button("Visualiser"):
         # Ajouter un marqueur pour l'épicentre
         folium.Marker(
             location=[center_lat, center_lon],
-            popup='Epicentre',
+            popup='Epicentre\MMI :'+str(maxmmi),
             icon=folium.Icon(color='black', prefix='fa', icon_size=100)
         ).add_to(world_map)
 
@@ -146,7 +146,7 @@ if st.button("Visualiser"):
 
         # Charger l'application Streamlit
         st.title(title)
-        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen"+str(mmi)+".")
+        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi)+".")
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
