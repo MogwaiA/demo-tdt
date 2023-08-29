@@ -68,7 +68,8 @@ def link_xml_event(id, proxies=None):
 
         # Accéder aux informations nécessaires dans la structure JSON
         url = data['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
-        return url
+        title=json.loads(response.text)['properties']["title"]
+        return url,title
     except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
         return None
 
@@ -81,9 +82,12 @@ seisme_id = st.text_input("Entrez l'ID du séisme :", 'hv73287947')  # Valeur pa
 
 # Ajouter un bouton pour démarrer la visualisation
 if st.button("Visualiser"):
-    xml_file_path = link_xml_event(seisme_id)
-    df = parse_link_grid_xml(xml_file_path)
+    event = link_xml_event(seisme_id)
     if df is not None:
+
+        xml_file_path=event[0]
+        title=event[1]
+        df = parse_link_grid_xml(xml_file_path)
         # Le reste du code pour la création de la carte et l'affichage des données
         sampled_df = df.sample(frac=0.05, random_state=42)
         minmmi = sampled_df["MMI"].min()
@@ -132,7 +136,7 @@ if st.button("Visualiser"):
 
         # Charger l'application Streamlit
         st.title("Carte de Sismicité")
-        st.subheader("Visualisation des données de sismicité")
+        st.subheader("Carte de l'impact selon l'échelle MMI du séisme "+ title)
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
