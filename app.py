@@ -95,7 +95,7 @@ if st.button("Visualiser"):
         mag=event[3]
         mmi=event[4]
 
-        date = datetime.fromtimestamp(time).strftime('%Y-%m-%d %H:%M:%S')
+        date = datetime.fromtimestamp(time)
         
         df = parse_link_grid_xml(xml_file_path)
         # Le reste du code pour la création de la carte et l'affichage des données
@@ -146,7 +146,7 @@ if st.button("Visualiser"):
 
         # Charger l'application Streamlit
         st.title(title)
-        st.subheader("Evènement du "+ date +" de magnitude "+mag+" de MMI moyen"+mmi+".")
+        st.subheader("Evènement du "+ date.strftime('%Y-%m-%d %H:%M:%S') +" de magnitude "+mag+" de MMI moyen"+mmi+".")
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
