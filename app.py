@@ -152,9 +152,13 @@ if st.button("Visualiser"):
             folium_static(world_map)
 
             # Afficher l'échelle de couleurs
-            color_scale.caption = "Modified Mercalli Intensity (MMI)"
+            st.write("Échelle de couleurs:")
+            colormap = color_scale.to_step(index=[minmmi, maxmmi], method='linear')
+            for color in colormap:
+                st.write(f'<div style="background-color: {color}; width: 30px; height: 10px;"></div>', unsafe_allow_html=True)
+                st.write(f'MMI {colormap.colors[color]:.1f}')
 
-            st.pyplot(color_scale)
+            st.markdown('<style>div[role="radiogroup"] > :first-child {display: none;}</style>', unsafe_allow_html=True)
             
 
         else:
