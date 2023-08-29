@@ -151,10 +151,12 @@ if st.button("Visualiser"):
             # Ajouter un widget de saisie de coordonnées
             latitude_input = st.number_input("Latitude du point :", min_value=-90.0, max_value=90.0)
             longitude_input = st.number_input("Longitude du point :", min_value=-180.0, max_value=180.0)
-            #nom_site = st.number_input("Nom du site :", "")
+
+            # Créer un espace vide pour afficher le bouton "Ajouter le point"
+            add_button_placeholder = st.empty()
 
             # Ajouter un bouton pour ajouter le point à la carte
-            if st.button("Ajouter le point"):
+            if add_button_placeholder.button("Ajouter le point"):
                 folium.Marker(
                     location=[latitude_input, longitude_input],
                     popup='Site observé',
