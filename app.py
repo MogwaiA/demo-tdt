@@ -157,7 +157,7 @@ if st.button("Visualiser"):
                 folium.Marker(
                     location=[latitude_input, longitude_input],
                     popup=nom_site,
-                    icon=folium.Icon(color='blue', prefix='fa', icon='circle')
+                    icon=folium.Icon(color='blue', prefix='fa')
                 ).add_to(world_map)
             
 
