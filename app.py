@@ -146,7 +146,7 @@ if st.button("Visualiser"):
 
         # Charger l'application Streamlit
         st.title(title)
-        st.subheader("Evènement du "+ date +" de magnitude "+mag+" de MMI moyen"+mmi".")
+        st.subheader("Evènement du "+ date +" de magnitude "+mag+" de MMI moyen"+mmi+".")
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
