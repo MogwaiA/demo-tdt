@@ -7,6 +7,7 @@ import folium
 import requests
 from datetime import datetime
 import json
+import matplotlib
 
 # Fonction pour parser le fichier XML et obtenir le DataFrame
 def parse_file_grid_xml(xml_file_path):
