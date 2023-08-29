@@ -153,7 +153,8 @@ if st.button("Visualiser"):
 
             # Afficher l'échelle de couleurs
             st.write("Échelle de couleurs:")
-            colormap = color_scale.to_step(index=[minmmi, maxmmi], method='linear')
+            colormap = color_scale.to_step(index=[minmmi, maxmmi + 0.001], method='linear')
+
             for color in colormap:
                 st.write(f'<div style="background-color: {color}; width: 30px; height: 10px;"></div>', unsafe_allow_html=True)
                 st.write(f'MMI {colormap.colors[color]:.1f}')
