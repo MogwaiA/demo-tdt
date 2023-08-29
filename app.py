@@ -5,6 +5,7 @@ import xml.etree.ElementTree as ET
 import os
 import folium
 import requests
+from datetime import datetime
 import json
 
 # Fonction pour parser le fichier XML et obtenir le DataFrame
@@ -69,7 +70,10 @@ def link_xml_event(id, proxies=None):
         # Accéder aux informations nécessaires dans la structure JSON
         url = data['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
         title=json.loads(response.text)['properties']["title"]
-        return url,title
+        time=json.loads(response.text)['properties']["time"]
+        mag=json.loads(response.text)['properties']["mag"]
+        mmi=json.loads(response.text)['properties']["mmi"]
+        return url,title,time,mag,mmi
     except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
         return None
 
@@ -87,6 +91,12 @@ if st.button("Visualiser"):
 
         xml_file_path=event[0]
         title=event[1]
+        time=event[2]
+        mag=event[3]
+        mmi=event[4]
+
+        date = datetime.fromtimestamp(time).strftime('%Y-%m-%d %H:%M:%S')
+        
         df = parse_link_grid_xml(xml_file_path)
         # Le reste du code pour la création de la carte et l'affichage des données
         sampled_df = df.sample(frac=0.05, random_state=42)
@@ -101,7 +111,7 @@ if st.button("Visualiser"):
         # Ajouter un marqueur pour l'épicentre
         folium.Marker(
             location=[center_lat, center_lon],
-            popup='Epicentre',
+            popup='Epicentre\nMMI :'+mmi,
             icon=folium.Icon(color='black', prefix='fa', icon_size=100)
         ).add_to(world_map)
 
@@ -135,8 +145,8 @@ if st.button("Visualiser"):
             ).add_to(world_map)
 
         # Charger l'application Streamlit
-        st.title("Carte de Sismicité")
-        st.subheader("Carte de l'impact selon l'échelle MMI du séisme "+ title)
+        st.title(title)
+        st.subheader("Evènement du "+ date +" de magnitude "+mag+" de MMI moyen"+mmi".")
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
