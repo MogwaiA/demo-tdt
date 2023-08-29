@@ -111,7 +111,7 @@ if st.button("Visualiser"):
         # Ajouter un marqueur pour l'épicentre
         folium.Marker(
             location=[center_lat, center_lon],
-            popup='Epicentre\MMI :'+str(maxmmi),
+            popup='Epicentre\nMMI :'+str(maxmmi),
             icon=folium.Icon(color='black', prefix='fa', icon_size=100)
         ).add_to(world_map)
 
