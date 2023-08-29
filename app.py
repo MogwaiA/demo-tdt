@@ -59,8 +59,9 @@ def parse_link_grid_xml(lien_grid_xml,proxies=None):
 
 def link_xml_event(id, proxies=None):
     url = f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid={id}"
-    response = requests.get(url, proxies=proxies)
-    url = json.loads(response.text)['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
+    try: 
+        response = requests.get(url, proxies=proxies)
+        url = json.loads(response.text)['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
     return url
 
 # Charger l'application Streamlit
