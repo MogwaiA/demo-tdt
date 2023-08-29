@@ -154,7 +154,7 @@ if st.button("Visualiser"):
             # Afficher l'échelle de couleurs
             color_scale.caption = "Modified Mercalli Intensity (MMI)"
             color_scale.add_to(world_map)
-            st.markdown(world_map._repr_html_(), unsafe_allow_html=True)
+            
 
         else:
             st.warning("Les informations sur les MMI et les impacts du séisme ne sont pas disponibles.")
