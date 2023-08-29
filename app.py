@@ -159,6 +159,8 @@ if st.button("Visualiser"):
                     popup='Site observé',
                     icon=folium.Icon(color='darkblue', prefix='fa')
                 ).add_to(world_map)
+            # Afficher à nouveau la carte mise à jour
+            folium_static(world_map)
             
 
         else:
