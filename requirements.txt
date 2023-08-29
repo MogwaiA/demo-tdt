@@ -1,4 +1,4 @@
 pandas
-folium
+streamlit_folium
 numpy
 streamlit
