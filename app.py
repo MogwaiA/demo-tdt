@@ -89,6 +89,8 @@ folium.Marker(
 custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
 color_scale = folium.LinearColormap(custom_colors, vmin=minmmi, vmax=maxmmi)
 
+sites = df[['Longitude','Latitude']].sample(frac=5/df.shape[0], random_state=42)
+
 # Ajouter les cercles colorés
 for index, row in sampled_df.iterrows():
     lat = row["Latitude"]
