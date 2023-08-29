@@ -4,9 +4,10 @@ from streamlit_folium import folium_static
 import xml.etree.ElementTree as ET
 import os
 import folium
+import requests
 
 # Fonction pour parser le fichier XML et obtenir le DataFrame
-def parse_grid_xml(xml_file_path):
+def parse_file_grid_xml(xml_file_path):
     tree = ET.parse(xml_file_path)
     root = tree.getroot()
 
@@ -21,12 +22,53 @@ def parse_grid_xml(xml_file_path):
     df = pd.DataFrame(data, columns=['Longitude', 'Latitude', 'MMI'])
     return df
 
-# Charger les données
-script_dir = os.path.dirname(os.path.abspath(__file__))
-# Construire le chemin complet du fichier que vous voulez charger
-xml_file_path = os.path.join(script_dir, "grid.xml")
+def parse_link_grid_xml(lien_grid_xml,proxies=None):
+    try:
+        # Télécharger le contenu du lien
+        response = requests.get(lien_grid_xml,proxies=proxies)
+        response.raise_for_status()  # Lève une exception si la requête échoue
 
-df = parse_grid_xml(xml_file_path)
+        contenu_xml = response.content
+
+        # Définir les noms d'espace
+        namespaces = {
+            'ns': 'http://earthquake.usgs.gov/eqcenter/shakemap'
+        }
+
+        # Analyser le contenu XML
+        root = ET.fromstring(contenu_xml)
+
+        # Initialiser une liste pour stocker les données
+        data = []
+
+        # Parcourir et extraire les données
+        for grid_data in root.findall('.//ns:grid_data', namespaces):
+            for point in grid_data.text.strip().split('\n'):
+                values = point.split()
+                lon, lat, mmi_value = map(float, values[:3])
+                data.append((lon, lat, mmi_value))
+
+        # Créer un DataFrame
+        df = pd.DataFrame(data, columns=['Longitude', 'Latitude', 'MMI'])
+
+        return df
+    except requests.exceptions.RequestException as e:
+        print("Une erreur de requête s'est produite:", e)
+        return None
+
+
+def link_xml_event(id, proxies=None):
+    url = f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid={id}"
+    response = requests.get(url, proxies=proxies)
+    url = json.loads(response.text)['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
+    return url
+
+# Construire le chemin complet du fichier que vous voulez charger
+id = 'hv73287947'
+
+xml_file_path=link_xml_event(id)
+
+df = parse_link_grid_xml(xml_file_path)
 sampled_df = df.sample(frac=0.05, random_state=42)
 minmmi = sampled_df["MMI"].min()
 maxmmi = sampled_df["MMI"].max()
@@ -59,6 +101,15 @@ for index, row in sampled_df.iterrows():
         fill=True,
         fill_color=color_scale(mmi),
         fill_opacity=0.01,
+    ).add_to(world_map)
+
+for index, row in sites.iterrows():
+    lat = row["Latitude"]
+    lon = row["Longitude"]
+    folium.Marker(
+        location=(lat, lon),
+        popup='Site',
+        icon=folium.Icon(color='darkred',prefix='fa')
     ).add_to(world_map)
 
 # Charger l'application Streamlit
