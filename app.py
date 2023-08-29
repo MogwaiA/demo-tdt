@@ -149,14 +149,11 @@ if st.button("Visualiser"):
             st.title(title)
             st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi)+".")
 
+            color_scale.caption = "Modified Mercalli Intensity (MMI)"
+            color_scale.add_to(world_map)
+
             # Afficher la carte Folium dans Streamlit
             folium_static(world_map)
-
-            # Afficher l'échelle de couleurs
-           
-            # Afficher l'échelle de couleurs en utilisant st.pyplot
-            st.pyplot(color_scale, cmap='YlOrRd', width=200, height=30)
-            st.write(f'Min MMI: {minmmi:.1f} | Max MMI: {maxmmi:.1f}')
             
 
         else:
