@@ -63,65 +63,74 @@ def link_xml_event(id, proxies=None):
     url = json.loads(response.text)['properties']["products"]["shakemap"][0]["contents"]["download/grid.xml"]["url"]
     return url
 
-# Construire le chemin complet du fichier que vous voulez charger
-id = 'hv73287947'
-
-xml_file_path=link_xml_event(id)
-
-df = parse_link_grid_xml(xml_file_path)
-sampled_df = df.sample(frac=0.05, random_state=42)
-minmmi = sampled_df["MMI"].min()
-maxmmi = sampled_df["MMI"].max()
-
-# Créer la carte avec Folium
-center_lat = sampled_df["Latitude"].mean()
-center_lon = sampled_df["Longitude"].mean()
-world_map = folium.Map(location=[center_lat, center_lon], zoom_start=5.3)
-
-# Ajouter un marqueur pour l'épicentre
-folium.Marker(
-    location=[center_lat, center_lon],
-    popup='Epicentre',
-    icon=folium.Icon(color='black', prefix='fa', icon_size=100)
-).add_to(world_map)
-
-# Définir l'échelle de couleurs
-custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
-color_scale = folium.LinearColormap(custom_colors, vmin=minmmi, vmax=maxmmi)
-
-sites = df[['Longitude','Latitude']].sample(frac=5/df.shape[0], random_state=42)
-
-# Ajouter les cercles colorés
-for index, row in sampled_df.iterrows():
-    lat = row["Latitude"]
-    lon = row["Longitude"]
-    mmi = row["MMI"]
-    folium.CircleMarker(
-        location=(lat, lon),
-        radius=20,
-        color=None,
-        fill=True,
-        fill_color=color_scale(mmi),
-        fill_opacity=0.01,
-    ).add_to(world_map)
-
-for index, row in sites.iterrows():
-    lat = row["Latitude"]
-    lon = row["Longitude"]
-    folium.Marker(
-        location=(lat, lon),
-        popup='Site',
-        icon=folium.Icon(color='darkred',prefix='fa')
-    ).add_to(world_map)
-
 # Charger l'application Streamlit
 st.title("Carte de Sismicité")
 st.subheader("Visualisation des données de sismicité")
 
-# Afficher la carte Folium dans Streamlit
-folium_static(world_map)
+# Ajouter un widget de saisie de texte pour l'ID du séisme
+seisme_id = st.text_input("Entrez l'ID du séisme :", 'hv73287947')  # Valeur par défaut : 'hv73287947'
 
-# Afficher l'échelle de couleurs
-color_scale.caption = "Modified Mercalli Intensity (MMI)"
-color_scale.add_to(world_map)
-st.markdown(world_map, unsafe_allow_html=True)
+# Ajouter un bouton pour démarrer la visualisation
+if st.button("Visualiser"):
+    xml_file_path = link_xml_event(seisme_id)
+    df = parse_link_grid_xml(xml_file_path)
+    if df is not None:
+        # Le reste du code pour la création de la carte et l'affichage des données
+        sampled_df = df.sample(frac=0.05, random_state=42)
+        minmmi = sampled_df["MMI"].min()
+        maxmmi = sampled_df["MMI"].max()
+
+        # Créer la carte avec Folium
+        center_lat = sampled_df["Latitude"].mean()
+        center_lon = sampled_df["Longitude"].mean()
+        world_map = folium.Map(location=[center_lat, center_lon], zoom_start=5.3)
+
+        # Ajouter un marqueur pour l'épicentre
+        folium.Marker(
+            location=[center_lat, center_lon],
+            popup='Epicentre',
+            icon=folium.Icon(color='black', prefix='fa', icon_size=100)
+        ).add_to(world_map)
+
+        # Définir l'échelle de couleurs
+        custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
+        color_scale = folium.LinearColormap(custom_colors, vmin=minmmi, vmax=maxmmi)
+
+        sites = df[['Longitude','Latitude']].sample(frac=5/df.shape[0], random_state=42)
+
+        # Ajouter les cercles colorés
+        for index, row in sampled_df.iterrows():
+            lat = row["Latitude"]
+            lon = row["Longitude"]
+            mmi = row["MMI"]
+            folium.CircleMarker(
+                location=(lat, lon),
+                radius=20,
+                color=None,
+                fill=True,
+                fill_color=color_scale(mmi),
+                fill_opacity=0.01,
+            ).add_to(world_map)
+
+        for index, row in sites.iterrows():
+            lat = row["Latitude"]
+            lon = row["Longitude"]
+            folium.Marker(
+                location=(lat, lon),
+                popup='Site',
+                icon=folium.Icon(color='darkred',prefix='fa')
+            ).add_to(world_map)
+
+        # Charger l'application Streamlit
+        st.title("Carte de Sismicité")
+        st.subheader("Visualisation des données de sismicité")
+
+        # Afficher la carte Folium dans Streamlit
+        folium_static(world_map)
+
+        # Afficher l'échelle de couleurs
+        color_scale.caption = "Modified Mercalli Intensity (MMI)"
+        color_scale.add_to(world_map)
+        st.markdown(world_map._repr_html_(), unsafe_allow_html=True)
+    else:
+        st.warning("Les informations sur les MMI et les impacts du séisme ne sont pas disponibles.")
