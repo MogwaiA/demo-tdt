@@ -152,14 +152,10 @@ if st.button("Visualiser"):
             folium_static(world_map)
 
             # Afficher l'échelle de couleurs
-            st.write("Échelle de couleurs:")
-            colormap = color_scale.to_step(index=[minmmi, maxmmi + 0.001], method='linear')
-
-            for color in colormap:
-                st.write(f'<div style="background-color: {color}; width: 30px; height: 10px;"></div>', unsafe_allow_html=True)
-                st.write(f'MMI {colormap.colors[color]:.1f}')
-
-            st.markdown('<style>div[role="radiogroup"] > :first-child {display: none;}</style>', unsafe_allow_html=True)
+           
+            # Afficher l'échelle de couleurs en utilisant st.pyplot
+            st.pyplot(color_scale, cmap='YlOrRd', width=200, height=30)
+            st.write(f'Min MMI: {minmmi:.1f} | Max MMI: {maxmmi:.1f}')
             
 
         else:
