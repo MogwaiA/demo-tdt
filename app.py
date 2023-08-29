@@ -3,6 +3,7 @@ import pandas as pd
 from streamlit_folium import folium_static
 import xml.etree.ElementTree as ET
 import os
+import folium
 
 # Fonction pour parser le fichier XML et obtenir le DataFrame
 def parse_grid_xml(xml_file_path):
