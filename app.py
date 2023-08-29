@@ -20,7 +20,7 @@ def parse_grid_xml(xml_file_path):
     return df
 
 # Charger les données
-xml_file_path = r'C:\Users\mamimeur\Downloads\grid.xml'
+xml_file_path = r'.\grid.xml'
 df = parse_grid_xml(xml_file_path)
 sampled_df = df.sample(frac=0.05, random_state=42)
 minmmi = sampled_df["MMI"].min()
