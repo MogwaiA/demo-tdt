@@ -152,8 +152,7 @@ if st.button("Visualiser"):
             folium_static(world_map)
 
             # Afficher l'échelle de couleurs
-            color_scale.caption = "Modified Mercalli Intensity (MMI)"
-            color_scale.add_to(world_map)
+            st.pyplot(color_scale.get_colormap(caption="Modified Mercalli Intensity (MMI)"))
             
 
         else:
