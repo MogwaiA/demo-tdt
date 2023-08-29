@@ -65,6 +65,7 @@ def link_xml_event(id, proxies=None):
         return url
 
 # Charger l'application Streamlit
+
 st.title("Carte de Sismicité")
 st.subheader("Visualisation des données de sismicité")
 
