@@ -98,7 +98,7 @@ if ajouter_point_manuellement:
     longitude_manuelle = st.number_input("Longitude :", value=0.0)
     
     if st.button("Ajouter le point"):
-        points_manuels.append((longitude_manuelle, latitude_manuelle))
+        points_manuels.append((latitude_manuelle, longitude_manuelle))
         st.success("Point ajouté avec succès!")
         st.subheader("Point ajouté : Lat :"+ str(points_manuels[0][0]) +" Lon :" + str(points_manuels[0][1]))
 
@@ -134,9 +134,9 @@ if st.button("Visualiser"):
             ).add_to(world_map)
 
              # Ajouter les marqueurs pour les points manuels
-            for lon, lat in points_manuels:
+            for lat, lon in points_manuels:
                 folium.Marker(
-                    location=(lat, lon),
+                    location=[lat, lon],
                     popup='Point manuel',
                     icon=folium.Icon(color='darkblue', prefix='fa', icon_size=100)
                 ).add_to(world_map)
