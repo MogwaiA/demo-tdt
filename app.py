@@ -132,6 +132,14 @@ if st.button("Visualiser"):
                 icon=folium.Icon(color='black', prefix='fa', icon_size=100)
             ).add_to(world_map)
 
+             # Ajouter les marqueurs pour les points manuels
+            for lon, lat in points_manuels:
+                folium.Marker(
+                    location=(lat, lon),
+                    popup='Point manuel',
+                    icon=folium.Icon(color='darkblue', prefix='fa', icon_size=100)
+                ).add_to(world_map)
+
             # Définir l'échelle de couleurs
             custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
             color_scale = folium.LinearColormap(custom_colors, vmin=minmmi, vmax=maxmmi)
@@ -152,13 +160,7 @@ if st.button("Visualiser"):
                     fill_opacity=0.01,
                 ).add_to(world_map)
 
-            # Ajouter les marqueurs pour les points manuels
-            for lon, lat in points_manuels:
-                folium.Marker(
-                    location=(lat, lon),
-                    popup='Point manuel',
-                    icon=folium.Icon(color='darkblue', prefix='fa', icon_size=100)
-                ).add_to(world_map)
+
 
 
             color_scale.caption = "Modified Mercalli Intensity (MMI)"
