@@ -9,7 +9,7 @@ from datetime import datetime
 import json
 import matplotlib
 from scipy.spatial.distance import cdist
-import useful_functions
+from useful_functions import *
 
 st.set_page_config(
     page_title="Carte de Sismicité",
