@@ -140,13 +140,8 @@ if st.button("Visualiser"):
             latitude_input = st.number_input("Latitude du point :", min_value=-90.0, max_value=90.0)
             longitude_input = st.number_input("Longitude du point :", min_value=-180.0, max_value=180.0)
 
-            # Ajouter un bouton pour ajouter le point à la carte
-            if st.button("Ajouter le point"):
-                folium.Marker(
-                    location=[latitude_input, longitude_input],
-                    popup='Point ajouté',
-                    icon=folium.Icon(color='blue', prefix='fa', icon='circle')
-                ).add_to(world_map)
+           
+
 
             # Charger l'application Streamlit
             st.title(title)
@@ -157,6 +152,15 @@ if st.button("Visualiser"):
 
             # Afficher la carte Folium dans Streamlit
             folium_static(world_map)
+
+             # Ajouter un bouton pour ajouter le point à la carte
+            if st.button("Ajouter le point"):
+                folium.Marker(
+                    location=[latitude_input, longitude_input],
+                    popup='Point ajouté',
+                    icon=folium.Icon(color='blue', prefix='fa', icon='circle')
+                ).add_to(world_map)
+                folium_static(world_map)
 
             
 
