@@ -129,25 +129,26 @@ col1, col2 = st.columns(2)
 with col1:
     seisme_id = st.text_input("Entrez l'ID du séisme :", '')
     ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
+with col2:
 
-# Initialiser une liste pour stocker les points ajoutés manuellement
-if 'points_manuels' not in st.session_state:
-    st.session_state.points_manuels = []
+    # Initialiser une liste pour stocker les points ajoutés manuellement
+    if 'points_manuels' not in st.session_state:
+        st.session_state.points_manuels = []
 
 
 
-# Si l'utilisateur a choisi d'ajouter un point manuellement
-if ajouter_point_manuellement:
-    st.subheader("Ajout de points manuels")
+    # Si l'utilisateur a choisi d'ajouter un point manuellement
+    if ajouter_point_manuellement:
+        st.subheader("Ajout de points manuels")
 
-    # Utilisation des colonnes pour diviser les widgets en deux parties
-    col1, col2 = st.columns(2)
-    latitude_manuelle = col1.number_input("Latitude :", value=0.0)
-    longitude_manuelle = col2.number_input("Longitude :", value=0.0)
+        # Utilisation des colonnes pour diviser les widgets en deux parties
+        col1, col2 = st.columns(2)
+        latitude_manuelle = col1.number_input("Latitude :", value=0.0)
+        longitude_manuelle = col2.number_input("Longitude :", value=0.0)
 
-    if st.button("Ajouter le point"):
-        st.session_state.points_manuels.append((latitude_manuelle, longitude_manuelle))
-        st.success("Point ajouté avec succès!")
+        if st.button("Ajouter le point"):
+            st.session_state.points_manuels.append((latitude_manuelle, longitude_manuelle))
+            st.success("Point ajouté avec succès!")
 
 
         
