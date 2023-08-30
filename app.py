@@ -139,7 +139,7 @@ if st.button("Visualiser"):
                 folium.Marker(
                     location=[lat, lon],
                     popup='Point manuel',
-                    icon=folium.Icon(color='darkblue', prefix='fa', icon_size=100)
+                    icon=folium.Icon(color='darkblue', prefix='fa')
                 ).add_to(world_map)
 
             # Définir l'échelle de couleurs
