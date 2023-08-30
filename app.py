@@ -136,7 +136,7 @@ with col2:
         st.subheader("Liste des points ajoutés manuellement")
         df_points_manuels = pd.DataFrame(st.session_state.points_manuels, columns=["Latitude", "Longitude"])
         st.table(df_points_manuels)
-        
+
 with col1:
     seisme_id = st.text_input("Entrez l'ID du séisme :", '')
 
@@ -160,84 +160,89 @@ with col1:
         
 # Ajouter un bouton pour démarrer la visualisation
 if st.button("Visualiser"):
-    event = link_xml_event(seisme_id)
-    if event is not None:
-        if event[0] is not None:
-            xml_file_path=event[0]
-            title=event[1]
-            time=event[2]
-            mag=event[3]
-            mmi=event[4]
+    
+    if seisme_id is not None:
+        event = link_xml_event(seisme_id)
+        if event is not None:
+            if event[0] is not None:
+                xml_file_path=event[0]
+                title=event[1]
+                time=event[2]
+                mag=event[3]
+                mmi=event[4]
 
-            date = datetime.fromtimestamp(time/1000).strftime('%Y-%m-%d %H:%M:%S')            
-            
-            df = parse_link_grid_xml(xml_file_path)
-            # Le reste du code pour la création de la carte et l'affichage des données
-            sampled_df = df.sample(frac=0.05, random_state=42)
-            minmmi = sampled_df["MMI"].min()
-            maxmmi = sampled_df["MMI"].max()
+                date = datetime.fromtimestamp(time/1000).strftime('%Y-%m-%d %H:%M:%S')            
+                
+                df = parse_link_grid_xml(xml_file_path)
+                # Le reste du code pour la création de la carte et l'affichage des données
+                sampled_df = df.sample(frac=0.05, random_state=42)
+                minmmi = sampled_df["MMI"].min()
+                maxmmi = sampled_df["MMI"].max()
 
-            mmi_points_manuels=point_plus_proche(st.session_state.points_manuels,df)
+                mmi_points_manuels=point_plus_proche(st.session_state.points_manuels,df)
 
-            # Créer la carte avec Folium
-            center_lat = sampled_df["Latitude"].mean()
-            center_lon = sampled_df["Longitude"].mean()
-            world_map = folium.Map(location=[center_lat, center_lon], zoom_start=5.3)
+                # Créer la carte avec Folium
+                center_lat = sampled_df["Latitude"].mean()
+                center_lon = sampled_df["Longitude"].mean()
+                world_map = folium.Map(location=[center_lat, center_lon], zoom_start=5.3)
 
-            # Ajouter un marqueur pour l'épicentre
-            folium.Marker(
-                location=[center_lat, center_lon],
-                popup='Epicentre\nMMI :'+str(maxmmi),
-                icon=folium.Icon(color='black', prefix='fa', icon_size=100)
-            ).add_to(world_map)
-
-            # Ajouter les marqueurs pour les points manuels
-            for (lat, lon), mmi in zip(st.session_state.points_manuels, mmi_points_manuels):
-                if mmi==0: 
-                    popup_content='Hors de la zone sismique' 
-                else: 
-                    popup_content = f'Point manuel\nMMI : {mmi}'
+                # Ajouter un marqueur pour l'épicentre
                 folium.Marker(
-                    location=[lat, lon],
-                    popup=popup_content,
-                    icon=folium.Icon(color='darkblue', prefix='fa')
+                    location=[center_lat, center_lon],
+                    popup='Epicentre\nMMI :'+str(maxmmi),
+                    icon=folium.Icon(color='black', prefix='fa', icon_size=100)
                 ).add_to(world_map)
 
-            # Définir l'échelle de couleurs
-            custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
-            color_scale = folium.LinearColormap(custom_colors, vmin=minmmi, vmax=maxmmi)
+                # Ajouter les marqueurs pour les points manuels
+                for (lat, lon), mmi in zip(st.session_state.points_manuels, mmi_points_manuels):
+                    if mmi==0: 
+                        popup_content='Hors de la zone sismique' 
+                    else: 
+                        popup_content = f'Point manuel\nMMI : {mmi}'
+                    folium.Marker(
+                        location=[lat, lon],
+                        popup=popup_content,
+                        icon=folium.Icon(color='darkblue', prefix='fa')
+                    ).add_to(world_map)
 
-            
+                # Définir l'échelle de couleurs
+                custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
+                color_scale = folium.LinearColormap(custom_colors, vmin=minmmi, vmax=maxmmi)
 
-            # Ajouter les cercles colorés
-            for index, row in sampled_df.iterrows():
-                lat = row["Latitude"]
-                lon = row["Longitude"]
-                mmi = row["MMI"]
-                folium.CircleMarker(
-                    location=(lat, lon),
-                    radius=20,
-                    color=None,
-                    fill=True,
-                    fill_color=color_scale(mmi),
-                    fill_opacity=0.01,
-                ).add_to(world_map)
+                
+
+                # Ajouter les cercles colorés
+                for index, row in sampled_df.iterrows():
+                    lat = row["Latitude"]
+                    lon = row["Longitude"]
+                    mmi = row["MMI"]
+                    folium.CircleMarker(
+                        location=(lat, lon),
+                        radius=20,
+                        color=None,
+                        fill=True,
+                        fill_color=color_scale(mmi),
+                        fill_opacity=0.01,
+                    ).add_to(world_map)
 
 
 
 
-            color_scale.caption = "Modified Mercalli Intensity (MMI)"
-            color_scale.add_to(world_map)
+                color_scale.caption = "Modified Mercalli Intensity (MMI)"
+                color_scale.add_to(world_map)
 
-            # Charger l'application Streamlit
-            st.title(title)
-            st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi)+".")
+                # Charger l'application Streamlit
+                st.title(title)
+                st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi)+".")
 
-            # Afficher la carte Folium dans Streamlit
-            folium_static(world_map)
-            
+                # Afficher la carte Folium dans Streamlit
+                folium_static(world_map)
+                
 
+            else:
+                st.warning("Les informations sur les MMI et les impacts du séisme ne sont pas disponibles.")
         else:
-            st.warning("Les informations sur les MMI et les impacts du séisme ne sont pas disponibles.")
-    else:
-        st.warning("L'évènemenent demandé est inconnu.")
+            st.warning("L'évènemenent demandé est inconnu.")
+    else :
+        st.warning("Veuillez entrer un ID de séisme à étudier.")
+
