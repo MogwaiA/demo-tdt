@@ -10,6 +10,15 @@ import json
 import matplotlib
 from scipy.spatial.distance import cdist
 
+st.set_page_config(
+    page_title="Carte de Sismicité",
+    page_icon=":earthquake:",
+    layout="wide",  # Utiliser une mise en page plus large
+    initial_sidebar_state="expanded",  # Barre latérale ouverte par défaut
+)
+
+
+
 # Fonction pour parser le fichier XML et obtenir le DataFrame
 def parse_file_grid_xml(xml_file_path):
     tree = ET.parse(xml_file_path)
@@ -111,15 +120,15 @@ def link_xml_event(id, proxies=None):
     except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
         return None
 
-# Charger l'application Streamlit
-st.title("Carte de Sismicité")
-st.subheader("Visualisation des données de sismicité")
+# Personnalisation de la mise en page avec du code HTML
+st.markdown("<h1 style='text-align: center;'>Carte de Sismicité</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: center;'>Visualisation des données de sismicité</h2>", unsafe_allow_html=True)
 
-# Ajouter un widget de saisie de texte pour l'ID du séisme
-seisme_id = st.text_input("Entrez l'ID du séisme :", '')  
-
-# Ajouter un widget de choix pour l'ajout de points manuels
-ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
+# Utilisation de colonnes pour organiser les widgets
+col1, col2 = st.columns(2)
+with col1:
+    seisme_id = st.text_input("Entrez l'ID du séisme :", '')
+    ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
 
 # Initialiser une liste pour stocker les points ajoutés manuellement
 if 'points_manuels' not in st.session_state:
