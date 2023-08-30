@@ -63,7 +63,7 @@ with col_2:
 # Ajouter un bouton pour démarrer la visualisation
 if st.button("Visualiser"):
     
-    if seisme_id is not None:
+    if seisme_id is not None and seisme_id!="":
         event = link_xml_event(seisme_id)
         if event is not None:
             if event[0] is not None:
