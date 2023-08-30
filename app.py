@@ -135,7 +135,7 @@ if st.button("Visualiser"):
             ).add_to(world_map)
 
              # Ajouter les marqueurs pour les points manuels
-            for lat, lon in points_manuels:
+            for lat, lon in st.session_state.points_manuels:
                 folium.Marker(
                     location=[lat, lon],
                     popup='Point manuel',
