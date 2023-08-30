@@ -121,8 +121,10 @@ def link_xml_event(id, proxies=None):
         return None
 
 # Personnalisation de la mise en page avec du code HTML
-st.markdown("<h1 style='text-align: center;'>Carte de Sismicité</h1>", unsafe_allow_html=True)
-st.markdown("<h2 style='text-align: center;'>Visualisation des données de sismicité</h2>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: left;'>Carte de Sismicité</h1>", unsafe_allow_html=True)
+st.markdown("<h2 style='text-align: left;'>Visualisation des données de sismicité</h2>", unsafe_allow_html=True)
+
+ seisme_id = st.text_input("Entrez l'ID du séisme :", '')
 
 # Utilisation de colonnes pour organiser les widgets
 col1, col2 = st.columns(2)
@@ -138,8 +140,6 @@ with col2:
         st.table(df_points_manuels)
 
 with col1:
-    seisme_id = st.text_input("Entrez l'ID du séisme :", '')
-
 
     # Si l'utilisateur a choisi d'ajouter un point manuellement
     if ajouter_point_manuellement:
