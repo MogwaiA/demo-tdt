@@ -11,8 +11,6 @@ import matplotlib
 from scipy.spatial.distance import cdist
 from useful_functions import *
 
-st.markdown("<h1 style='text-align: left;'>Analyse de la sismicité</h1>", unsafe_allow_html=True)
-
 
 st.set_page_config(
     page_title="Carte de Sismicité",
