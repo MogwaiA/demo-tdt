@@ -65,6 +65,10 @@ def point_plus_proche(liste,grid):
     for lat, lon in liste:
         lat0 = lat
         lon0 = lon
+
+        #Borne du rectangle décrit dans le grid.xml
+        lat_min, lat_max = grid["Latitude"].min(), grid["Latitude"].max()
+        lon_min, lon_max = grid["Longitude"].min(), grid["Longitude"].max()
         
         # Calcul des bornes du carré défini par latitude et longitude (arrondies à la dixième près)
         lat_floor, lat_roof = lat0-0.5,lat0+0.5
