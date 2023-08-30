@@ -1,6 +1,6 @@
 pandas
 streamlit_folium
 numpy
-streamlit
+streamlit==1.26.0
 matplotlib
 scipy

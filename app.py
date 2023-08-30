@@ -130,14 +130,11 @@ if 'points_manuels' not in st.session_state:
 # Si l'utilisateur a choisi d'ajouter un point manuellement
 if ajouter_point_manuellement:
     st.subheader("Ajout de points manuels")
-    # Utilisation de flexbox pour créer deux colonnes
-    st.write('<style> .flex-container { display: flex; flex-direction: row; justify-content: space-between; } </style>', unsafe_allow_html=True)
-    
-    with st.container():
-        st.write('<div class="flex-container">')
-        latitude_manuelle = st.number_input("Latitude :", value=0.0, key="latitude_input")
-        longitude_manuelle = st.number_input("Longitude :", value=0.0, key="longitude_input")
-        st.write('</div>')
+
+    # Utilisation des colonnes pour diviser les widgets en deux parties
+    col1, col2 = st.columns(2)
+    latitude_manuelle = col1.number_input("Latitude :", value=0.0)
+    longitude_manuelle = col2.number_input("Longitude :", value=0.0)
 
     if st.button("Ajouter le point"):
         st.session_state.points_manuels.append((latitude_manuelle, longitude_manuelle))
