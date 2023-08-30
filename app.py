@@ -100,8 +100,7 @@ if ajouter_point_manuellement:
     if st.button("Ajouter le point"):
         points_manuels.append((longitude_manuelle, latitude_manuelle))
         st.success("Point ajouté avec succès!")
-
-st.subheader("Point ajouté : Lat :"+ str(point_manuel[0][0]) +" Lon :" + str(point_manuel[0][1]))
+        st.subheader("Point ajouté : Lat :"+ str(point_manuels[0][0]) +" Lon :" + str(point_manuels[0][1]))
 
 # Ajouter un bouton pour démarrer la visualisation
 if st.button("Visualiser"):
