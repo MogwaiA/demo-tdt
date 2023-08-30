@@ -161,12 +161,12 @@ if st.button("Visualiser"):
                 ).add_to(world_map)
 
 
+            color_scale.caption = "Modified Mercalli Intensity (MMI)"
+            color_scale.add_to(world_map)
+
             # Charger l'application Streamlit
             st.title(title)
             st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi)+".")
-
-            color_scale.caption = "Modified Mercalli Intensity (MMI)"
-            color_scale.add_to(world_map)
 
             # Afficher la carte Folium dans Streamlit
             folium_static(world_map)
