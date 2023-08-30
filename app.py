@@ -59,16 +59,22 @@ with col_2:
     if len(st.session_state.points_manuels) > 0:
         st.subheader("Liste des points ajoutés manuellement")
         df_points_manuels = pd.DataFrame(st.session_state.points_manuels, columns=["Latitude", "Longitude"])
-        
+
         # Ajouter une colonne de boutons de suppression
         df_points_manuels["Action"] = ""
         for idx in df_points_manuels.index:
-            delete_button = st.button("🗑️", key="🗑️")
+            delete_button = st.button(f"Supprimer {idx}", key=f"supprimer_{idx}")
             df_points_manuels.at[idx, "Action"] = delete_button
-        
-        # Filtrer les lignes où le bouton de suppression a été cliqué
-        df_points_manuels = df_points_manuels[df_points_manuels["Action"] == False]
-        
+
+        # Filtrer les lignes où le bouton de suppression n'a pas été cliqué
+        df_points_manuels = df_points_manuels[df_points_manuels["Action"]]
+
+        # Supprimer les coordonnées des points supprimés de st.session_state.points_manuels
+        deleted_indices = df_points_manuels.index
+        st.session_state.points_manuels = [
+            (lat, lon) for idx, (lat, lon) in enumerate(st.session_state.points_manuels) if idx not in deleted_indices
+        ]
+
         # Afficher le tableau mis à jour
         st.dataframe(df_points_manuels.drop(columns=["Action"]), index=False)
 
