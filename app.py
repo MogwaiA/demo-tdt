@@ -8,6 +8,7 @@ import requests
 from datetime import datetime
 import json
 import matplotlib
+from scipy.spatial.distance import cdist
 
 # Fonction pour parser le fichier XML et obtenir le DataFrame
 def parse_file_grid_xml(xml_file_path):
@@ -58,6 +59,34 @@ def parse_link_grid_xml(lien_grid_xml,proxies=None):
     except requests.exceptions.RequestException as e:
         print("Une erreur de requête s'est produite:", e)
         return None
+    
+def point_plus_proche(liste,grid):
+    liste_mmi=[]
+    for lat, lon in liste:
+        lat0 = lat
+        lon0 = lon
+        
+        # Calcul des bornes du carré défini par latitude et longitude (arrondies à la dixième près)
+        lat_floor, lat_roof = lat0-0.5,lat0+0.5
+        lon_floor, lon_roof = lon0-0.5,lon0+0.5
+        
+        # Filtrage des points de la grille qui sont à l'intérieur du carré
+        filtered_grid = grid[
+            (grid['Latitude'] >= lat_floor) & (grid['Latitude'] <= lat_roof) &
+            (grid['Longitude'] >= lon_floor) & (grid['Longitude'] <= lon_roof)
+        ]
+        
+        if lat_min <= lat0 <= lat_max and lon_min <= lon0 <= lon_max:
+            distance = cdist([(lat0, lon0)], filtered_grid[['Latitude', 'Longitude']], metric='euclidean')[0]
+            index_plus_proche = filtered_grid.iloc[distance.argmin()].name
+            mmi_value = filtered_grid.loc[index_plus_proche, 'MMI']
+            
+            liste_mmi.append(mmi_value)
+        
+        else:
+            liste_mmi.append(0)
+    return liste_mmi
+    
 
 
 
@@ -114,13 +143,15 @@ if st.button("Visualiser"):
             mag=event[3]
             mmi=event[4]
 
-            date = datetime.fromtimestamp(time/1000).strftime('%Y-%m-%d %H:%M:%S')
+            date = datetime.fromtimestamp(time/1000).strftime('%Y-%m-%d %H:%M:%S')            
             
             df = parse_link_grid_xml(xml_file_path)
             # Le reste du code pour la création de la carte et l'affichage des données
             sampled_df = df.sample(frac=0.05, random_state=42)
             minmmi = sampled_df["MMI"].min()
             maxmmi = sampled_df["MMI"].max()
+
+            mmi_points_manuels=point_plus_proche(st.session_state.points_manuels,df)
 
             # Créer la carte avec Folium
             center_lat = sampled_df["Latitude"].mean()
@@ -134,11 +165,12 @@ if st.button("Visualiser"):
                 icon=folium.Icon(color='black', prefix='fa', icon_size=100)
             ).add_to(world_map)
 
-             # Ajouter les marqueurs pour les points manuels
-            for lat, lon in st.session_state.points_manuels:
+            # Ajouter les marqueurs pour les points manuels
+            for (lat, lon), mmi in zip(st.session_state.points_manuels, mmi_points_manuels):
+                if mmi=0: popup_content='Hors de la zone sismique' else: popup_content = f'Point manuel\nMMI : {mmi}'
                 folium.Marker(
                     location=[lat, lon],
-                    popup='Point manuel',
+                    popup=popup_content,
                     icon=folium.Icon(color='darkblue', prefix='fa')
                 ).add_to(world_map)
 
