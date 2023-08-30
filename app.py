@@ -85,6 +85,22 @@ st.subheader("Visualisation des données de sismicité")
 # Ajouter un widget de saisie de texte pour l'ID du séisme
 seisme_id = st.text_input("Entrez l'ID du séisme :", '')  
 
+# Ajouter un widget de choix pour l'ajout de points manuels
+ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
+
+# Initialiser une liste pour stocker les points ajoutés manuellement
+points_manuels = []
+
+# Si l'utilisateur a choisi d'ajouter un point manuellement
+if ajouter_point_manuellement:
+    st.subheader("Ajout de points manuels")
+    latitude_manuelle = st.number_input("Latitude :", value=0.0)
+    longitude_manuelle = st.number_input("Longitude :", value=0.0)
+    
+    if st.button("Ajouter le point"):
+        points_manuels.append((longitude_manuelle, latitude_manuelle))
+        st.success("Point ajouté avec succès!")
+
 # Ajouter un bouton pour démarrer la visualisation
 if st.button("Visualiser"):
     event = link_xml_event(seisme_id)
@@ -136,11 +152,13 @@ if st.button("Visualiser"):
                     fill_opacity=0.01,
                 ).add_to(world_map)
 
-            # Ajouter un widget de saisie de coordonnées
-            latitude_input = st.number_input("Latitude du point :", min_value=-90.0, max_value=90.0)
-            longitude_input = st.number_input("Longitude du point :", min_value=-180.0, max_value=180.0)
-
-           
+            # Ajouter les marqueurs pour les points manuels
+            for lon, lat in points_manuels:
+                folium.Marker(
+                    location=(lat, lon),
+                    popup='Point manuel',
+                    icon=folium.Icon(color='blue', prefix='fa')
+                ).add_to(world_map)
 
 
             # Charger l'application Streamlit
@@ -152,16 +170,6 @@ if st.button("Visualiser"):
 
             # Afficher la carte Folium dans Streamlit
             folium_static(world_map)
-
-             # Ajouter un bouton pour ajouter le point à la carte
-            if st.button("Ajouter le point"):
-                folium.Marker(
-                    location=[latitude_input, longitude_input],
-                    popup='Point ajouté',
-                    icon=folium.Icon(color='blue', prefix='fa', icon='circle')
-                ).add_to(world_map)
-                folium_static(world_map)
-
             
 
         else:
