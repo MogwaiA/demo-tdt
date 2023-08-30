@@ -24,7 +24,7 @@ st.set_page_config(
 st.markdown("<h1 style='text-align: left;'>Carte de Sismicité</h1>", unsafe_allow_html=True)
 st.markdown("<h2 style='text-align: left;'>Visualisation des données de sismicité</h2>", unsafe_allow_html=True)
 
- seisme_id = st.text_input("Entrez l'ID du séisme :", '')
+seisme_id = st.text_input("Entrez l'ID du séisme :", '')
 
 # Utilisation de colonnes pour organiser les widgets
 col1, col2 = st.columns(2)
