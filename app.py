@@ -125,19 +125,23 @@ ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
 if 'points_manuels' not in st.session_state:
     st.session_state.points_manuels = []
 
+
 # Si l'utilisateur a choisi d'ajouter un point manuellement
 if ajouter_point_manuellement:
     st.subheader("Ajout de points manuels")
-    col1, col2 = st.beta_columns(2)  # Créer deux colonnes
-    with col1:
-        latitude_manuelle = st.number_input("Latitude :", value=0.0)
     
-    with col2:
-        longitude_manuelle = st.number_input("Longitude :", value=0.0)
+    st.write('<style> .input-container { display: flex; gap: 20px; } </style>', unsafe_allow_html=True)
     
+    with st.container():
+        st.write('<div class="input-container">')
+        latitude_manuelle = st.number_input("Latitude :", value=0.0, key="latitude_input")
+        longitude_manuelle = st.number_input("Longitude :", value=0.0, key="longitude_input")
+        st.write('</div>')
+
     if st.button("Ajouter le point"):
         st.session_state.points_manuels.append((latitude_manuelle, longitude_manuelle))
         st.success("Point ajouté avec succès!")
+
         
         
 # Ajouter un bouton pour démarrer la visualisation
