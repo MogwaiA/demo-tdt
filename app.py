@@ -126,6 +126,17 @@ st.markdown("<h2 style='text-align: center;'>Visualisation des données de sismi
 
 # Utilisation de colonnes pour organiser les widgets
 col1, col2 = st.columns(2)
+with col2:
+    ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
+        # Initialiser une liste pour stocker les points ajoutés manuellement
+    if 'points_manuels' not in st.session_state:
+        st.session_state.points_manuels = []
+
+    if len(st.session_state.points_manuels) > 0:
+        st.subheader("Liste des points ajoutés manuellement")
+        df_points_manuels = pd.DataFrame(st.session_state.points_manuels, columns=["Latitude", "Longitude"])
+        st.table(df_points_manuels)
+        
 with col1:
     seisme_id = st.text_input("Entrez l'ID du séisme :", '')
 
@@ -143,16 +154,7 @@ with col1:
             st.session_state.points_manuels.append((latitude_manuelle, longitude_manuelle))
             st.success("Point ajouté avec succès!")
 
-with col2:
-    ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
-        # Initialiser une liste pour stocker les points ajoutés manuellement
-    if 'points_manuels' not in st.session_state:
-        st.session_state.points_manuels = []
 
-    if len(st.session_state.points_manuels) > 0:
-        st.subheader("Liste des points ajoutés manuellement")
-        df_points_manuels = pd.DataFrame(st.session_state.points_manuels, columns=["Latitude", "Longitude"])
-        st.table(df_points_manuels)
 
         
         
