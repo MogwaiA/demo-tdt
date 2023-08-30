@@ -101,6 +101,8 @@ if ajouter_point_manuellement:
         points_manuels.append((longitude_manuelle, latitude_manuelle))
         st.success("Point ajouté avec succès!")
 
+st.subheader("Point ajouté : Lat :"+ str(point_manuel[0][0]) +" Lon :" + str(point_manuel[0][1]))
+
 # Ajouter un bouton pour démarrer la visualisation
 if st.button("Visualiser"):
     event = link_xml_event(seisme_id)
