@@ -27,9 +27,9 @@ st.markdown("<h2 style='text-align: left;'>Visualisation des données de sismici
 seisme_id = st.text_input("Entrez l'ID du séisme :", '')
 
 # Utilisation de colonnes pour organiser les widgets
-col1, col2 = st.columns(2)
+col_1, col_2 = st.columns(2)
 
-with col1:
+with col_1:
     ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
         # Initialiser une liste pour stocker les points ajoutés manuellement
     if 'points_manuels' not in st.session_state:
@@ -49,7 +49,7 @@ with col1:
             st.success("Point ajouté avec succès!")
         
 
-with col2:
+with col_2:
     
 
     if len(st.session_state.points_manuels) > 0:
