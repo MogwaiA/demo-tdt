@@ -167,7 +167,7 @@ if st.button("Visualiser"):
 
             # Ajouter les marqueurs pour les points manuels
             for (lat, lon), mmi in zip(st.session_state.points_manuels, mmi_points_manuels):
-                if mmi=0: popup_content='Hors de la zone sismique' else: popup_content = f'Point manuel\nMMI : {mmi}'
+                if mmi==0: popup_content='Hors de la zone sismique' else: popup_content = f'Point manuel\nMMI : {mmi}'
                 folium.Marker(
                     location=[lat, lon],
                     popup=popup_content,
