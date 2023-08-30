@@ -11,6 +11,9 @@ import matplotlib
 from scipy.spatial.distance import cdist
 from useful_functions import *
 
+st.markdown("<h1 style='text-align: left;'>Analyse de la sismicité</h1>", unsafe_allow_html=True)
+
+
 st.set_page_config(
     page_title="Carte de Sismicité",
     page_icon=":earthquake:",
@@ -58,14 +61,16 @@ with col_2:
         df_points_manuels = pd.DataFrame(st.session_state.points_manuels, columns=["Latitude", "Longitude"])
         
         # Ajouter une colonne de boutons de suppression
-        df_points_manuels["Action"] = df_points_manuels.index
-        df_points_manuels["Action"] = df_points_manuels["Action"].apply(lambda idx: st.button(f"Supprimer {idx}", key=f"supprimer_{idx}"))
+        df_points_manuels["Action"] = ""
+        for idx in df_points_manuels.index:
+            delete_button = st.button(f"Supprimer {idx}", key=f"supprimer_{idx}")
+            df_points_manuels.at[idx, "Action"] = delete_button
         
         # Filtrer les lignes où le bouton de suppression a été cliqué
         df_points_manuels = df_points_manuels[df_points_manuels["Action"] == False]
         
         # Afficher le tableau mis à jour
-        st.table(df_points_manuels.drop(columns=["Action"]))
+        st.dataframe(df_points_manuels.drop(columns=["Action"]), index=False)
 
 
         
