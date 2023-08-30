@@ -52,10 +52,20 @@ with col_1:
 with col_2:
     
 
+    # Afficher la liste des points ajoutés par l'utilisateur dans un tableau
     if len(st.session_state.points_manuels) > 0:
         st.subheader("Liste des points ajoutés manuellement")
         df_points_manuels = pd.DataFrame(st.session_state.points_manuels, columns=["Latitude", "Longitude"])
-        st.table(df_points_manuels)
+        
+        # Ajouter une colonne de boutons de suppression
+        df_points_manuels["Action"] = df_points_manuels.index
+        df_points_manuels["Action"] = df_points_manuels["Action"].apply(lambda idx: st.button(f"Supprimer {idx}", key=f"supprimer_{idx}"))
+        
+        # Filtrer les lignes où le bouton de suppression a été cliqué
+        df_points_manuels = df_points_manuels[df_points_manuels["Action"] == False]
+        
+        # Afficher le tableau mis à jour
+        st.table(df_points_manuels.drop(columns=["Action"]))
 
 
         
