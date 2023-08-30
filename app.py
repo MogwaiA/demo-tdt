@@ -130,7 +130,6 @@ if 'points_manuels' not in st.session_state:
 # Si l'utilisateur a choisi d'ajouter un point manuellement
 if ajouter_point_manuellement:
     st.subheader("Ajout de points manuels")
-
     # Utilisation de flexbox pour créer deux colonnes
     st.write('<style> .flex-container { display: flex; flex-direction: row; justify-content: space-between; } </style>', unsafe_allow_html=True)
     
