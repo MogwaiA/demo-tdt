@@ -89,7 +89,8 @@ seisme_id = st.text_input("Entrez l'ID du séisme :", '')
 ajouter_point_manuellement = st.checkbox("Ajouter un point manuellement")
 
 # Initialiser une liste pour stocker les points ajoutés manuellement
-points_manuels = []
+if 'points_manuels' not in st.session_state:
+    st.session_state.points_manuels = []
 
 # Si l'utilisateur a choisi d'ajouter un point manuellement
 if ajouter_point_manuellement:
@@ -98,10 +99,10 @@ if ajouter_point_manuellement:
     longitude_manuelle = st.number_input("Longitude :", value=0.0)
     
     if st.button("Ajouter le point"):
-        points_manuels.append((latitude_manuelle, longitude_manuelle))
+        st.session_state.points_manuels.append((latitude_manuelle, longitude_manuelle))
         st.success("Point ajouté avec succès!")
-        st.subheader("Point ajouté : Lat :"+ str(points_manuels[0][0]) +" Lon :" + str(points_manuels[0][1]))
-
+        
+        
 # Ajouter un bouton pour démarrer la visualisation
 if st.button("Visualiser"):
     event = link_xml_event(seisme_id)
