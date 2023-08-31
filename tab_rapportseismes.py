@@ -134,15 +134,12 @@ def rapports_seismes():
         ).add_to(world_map)
 
         # Ajouter les marqueurs pour les sites
-        c=0
-        val=0
+
         for (lat, lon), mmi,value in zip(liste_coordonnees, mmi_sites,values):
 
             if mmi==0: 
                 popup_content='Hors de la zone sismique' 
             else: 
-                c=c+1
-                val=val+value
                 popup_content = f'Site \nMMI : {mmi}\nTIV : {round(value/10**3,1)} k$'
             folium.Marker(
                 location=[lat, lon],
@@ -179,17 +176,9 @@ def rapports_seismes():
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
+        n_sites_touches = sum(mmi > 0 for mmi in mmi_sites)
+        var = round(sum(value for mmi, value in zip(mmi_sites, values) if mmi > 0) / 10**3, 1)
 
-        st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {c} sites pour une valeur assurée totale de {round(val/10**3,1)} k€ </h1>", unsafe_allow_html=True)
-
-
-
-        
-        
-  
-
-
-
-
+        st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h1>", unsafe_allow_html=True)
 
 
