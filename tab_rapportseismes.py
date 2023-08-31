@@ -62,21 +62,16 @@ def rapports_seismes():
         st.subheader("Top 10 des évènements les plus importants")
         top_mmi_rows = event_list.nlargest(10, 'properties.mmi')
         
-        selected_ids = []  # Liste pour stocker les ID cochés
         
-
-
         top_mmi_rows_renamed = top_mmi_rows.rename(
             columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
         )
 
-        st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']])
+        selected_id = st.radio("Sélectionner un ID :", top_mmi_rows['ID'])
+        st.write("Lien vers USGS :", selected_row['properties.url'])
 
-        for idx, row in top_mmi_rows_renamed.iterrows():
-            id_checked = st.checkbox(f"ID {row['ID']} (MMI: {row['MMI']})", key=row['ID'])
-            if id_checked:
-                selected_ids.append(row['ID'])
-                st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']])
+        
+                
 
         
         
