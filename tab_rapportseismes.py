@@ -42,7 +42,7 @@ def rapports_seismes():
 
         st.write(f"Période sélectionnée : {period} ({selected_days} jours)")
     
-    event_list=download_list_event(period)
+    event_list=download_list_event(selected_days)
     
     # Affichage d'une synthèse des données téléchargées
     st.subheader("Histogramme du nombre d'id par mmi")
