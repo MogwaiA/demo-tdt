@@ -56,10 +56,10 @@ def rapports_seismes():
         st.pyplot(plt)
     
     with col2:
-    # Afficher un tableau avec les 5 plus gros mmi
-    st.subheader("Top 5 des évènements les plus importants")
-    top_mmi_rows = event_list.nlargest(5, 'properties.mmi')
-    st.table(top_mmi_rows[['id', 'properties.mmi', 'properties.url']])
+        # Afficher un tableau avec les 5 plus gros mmi
+        st.subheader("Top 5 des évènements les plus importants")
+        top_mmi_rows = event_list.nlargest(5, 'properties.mmi')
+        st.table(top_mmi_rows[['id', 'properties.mmi', 'properties.url']])
 
   
 
