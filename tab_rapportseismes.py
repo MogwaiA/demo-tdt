@@ -37,10 +37,17 @@ def rapports_seismes():
     with col1:
         # Affichage d'une synthèse des données téléchargées
         st.subheader("Histogramme du nombre d'id par mmi")
-        mmi_counts = event_list['properties.mmi'].value_counts()
-        plt.bar(mmi_counts.index, mmi_counts.values)
+        bins = np.arange(0, 11, 1)  # Crée des intervalles [0, 1), [1, 2), ..., [9, 10)
+        mmi_discretized = pd.cut(event_list['properties.mmi'], bins=bins, right=False)
+
+        # Calculer le nombre d'événements par catégorie
+        mmi_counts = mmi_discretized.value_counts().sort_index()
+
+        # Créer l'histogramme
+        plt.bar(mmi_counts.index.left, mmi_counts.values, width=1, align='edge')
         plt.xlabel('MMI')
-        plt.ylabel('Nombre d\'évènements')
+        plt.ylabel("Nombre d'événements")
+        plt.xticks(np.arange(0, 11, 1))
         st.pyplot(plt)
     
     with col2:
