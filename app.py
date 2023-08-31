@@ -61,20 +61,20 @@ with col_2:
         # Ajouter une colonne de boutons de suppression
         df_points_manuels["Action"] = ""
         for idx in df_points_manuels.index:
-            delete_button = st.button(f"Supprimer {idx}", key=f"supprimer_{idx}")
+            delete_button = st.button("🗑️", key="🗑️")
             df_points_manuels.at[idx, "Action"] = delete_button
 
         # Filtrer les lignes où le bouton de suppression n'a pas été cliqué
         df_points_manuels = df_points_manuels[df_points_manuels["Action"]]
 
         # Supprimer les coordonnées des points supprimés de st.session_state.points_manuels
-        deleted_indices = df_points_manuels.index
+        deleted_indices = df_points_manuels[df_points_manuels["Action"] == True].index
         st.session_state.points_manuels = [
             (lat, lon) for idx, (lat, lon) in enumerate(st.session_state.points_manuels) if idx not in deleted_indices
         ]
 
         # Afficher le tableau mis à jour
-        st.dataframe(df_points_manuels.drop(columns=["Action"]), index=False)
+        st.table(df_points_manuels)
 
 
         
