@@ -168,7 +168,7 @@ def rapports_seismes():
 
         # Charger l'application Streamlit
         st.title(title)
-        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi_event)+".")
+        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(round(mmi_event,1))+".")
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
