@@ -60,17 +60,12 @@ def rapports_seismes():
         st.subheader("Top 10 des évènements les plus importants")
         top_mmi_rows = event_list.nlargest(10, 'properties.mmi')
 
-        top_mmi_rows['properties.url'] = top_mmi_rows['properties.url'].apply(
-            lambda url: f'<a href="{url}" target="_blank">{url}</a>'
-        )
-
         top_mmi_rows_renamed = top_mmi_rows.rename(
             columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
         )
         
         # Afficher le tableau formaté
-        for index, row in top_mmi_rows_renamed.iterrows():
-            st.write(f"ID: {row['ID']}, MMI: {row['MMI']}, URL: [{row['URL']}]({row['URL']})")
+        st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']])
   
 
 
