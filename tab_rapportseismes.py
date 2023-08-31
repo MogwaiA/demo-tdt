@@ -112,7 +112,7 @@ def rapports_seismes():
         time=event[2]
         date = datetime.fromtimestamp(time/1000).strftime('%Y-%m-%d %H:%M:%S')
         mag=event[3]
-        mmi=event[4]
+        mmi_event=event[4]
         
         # Lire le grid.xml
         grid_event = parse_link_grid_xml(xml_file_path)
@@ -168,7 +168,7 @@ def rapports_seismes():
 
         # Charger l'application Streamlit
         st.title(title)
-        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi)+".")
+        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi_event)+".")
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
