@@ -50,6 +50,10 @@ def rapports_seismes():
         # Trier les événements par ordre décroissant du MMI
         sorted_event_list = event_list.sort_values(by='properties.mmi', ascending=False)
 
+        sorted_event_list = sorted_event_list.rename(
+            columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
+        )
+
         # Afficher les événements triés par lot de 10
         items_per_page = 10
         num_pages = (len(sorted_event_list) + items_per_page - 1) // items_per_page
