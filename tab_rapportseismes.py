@@ -8,14 +8,7 @@ def rapports_seismes():
     col_1, col_2 = st.columns(2)
 
     with col_1:
-        st.markdown("<h3 style='text-align: left;'>Sites à observer :</h3>", unsafe_allow_html=True)
-
-        # Ajouter un widget de chargement de fichier
-        uploaded_file = st.file_uploader("Charger une liste de coordonnées géographiques", type=["csv", "xlsx"])
-
-        if uploaded_file is not None:
-            # Charger les données à partir du fichier
-            df = load_data(uploaded_file)
+       
 
     with col_2:
         # Widget pour choisir la période
@@ -73,7 +66,14 @@ def rapports_seismes():
         st.markdown(f"[{selected_row['Lien vers USGS']}]({selected_row['Lien vers USGS']})")
 
         
-                
+    st.markdown("<h3 style='text-align: left;'>Sites à observer :</h3>", unsafe_allow_html=True)
+
+    # Ajouter un widget de chargement de fichier
+    uploaded_file = st.file_uploader("Charger une liste de coordonnées géographiques", type=["csv", "xlsx"])
+
+    if uploaded_file is not None:
+        # Charger les données à partir du fichier
+        df = load_data(uploaded_file)
 
         
         
