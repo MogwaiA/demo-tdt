@@ -24,6 +24,8 @@ tabs = {
       "Visualisation Sismicité": carte_par_eventid
 }
 
-
+# Afficher les onglets
+selected_tab = st.sidebar.radio("Sélectionnez un onglet", list(tabs.keys()))
+tabs[selected_tab]()
 
 
