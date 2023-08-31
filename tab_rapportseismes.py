@@ -61,7 +61,7 @@ def rapports_seismes():
         )
 
         # Extraire l'ID du texte sélectionné
-        selected_id = int(selected_id.split(':')[1].split('(')[0].strip())
+        selected_id = selected_radio_text.split(':')[1].split('(')[0].strip()
         selected_row = top_mmi_rows_renamed[top_mmi_rows_renamed['ID'] == selected_id].iloc[0]
         st.write("Lien vers USGS :")
         st.markdown(f"[{selected_row['Lien vers USGS']}]({selected_row['Lien vers USGS']})")
