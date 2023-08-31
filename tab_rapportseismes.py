@@ -50,23 +50,22 @@ def rapports_seismes():
         # Trier les événements par ordre décroissant du MMI
         sorted_event_list = event_list.sort_values(by='properties.mmi', ascending=False)
 
-        sorted_event_list = sorted_event_list.rename(
+        sorted_event_list_renamed = sorted_event_list.rename(
             columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
         )
 
         # Afficher les événements triés par lot de 10
         items_per_page = 10
-        num_pages = (len(sorted_event_list) + items_per_page - 1) // items_per_page
+        num_pages = (len(sorted_event_list_renamed) + items_per_page - 1) // items_per_page
 
         page = st.slider("Page", 1, num_pages, value=1)
 
         start_idx = (page - 1) * items_per_page
-        end_idx = min(start_idx + items_per_page, len(sorted_event_list))
+        end_idx = min(start_idx + items_per_page, len(sorted_event_list_renamed))
 
-        for _, row in sorted_event_list[start_idx:end_idx].iterrows():
-            selected_radio_text = st.radio(
+        selected_radio_text = st.radio(
             "Sélectionner un ID :",
-            [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in sorted_event_list.iterrows()]
+            [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
         )
 
         # Afficher la pagination
@@ -74,10 +73,11 @@ def rapports_seismes():
 
         # Extraire l'ID du texte sélectionné
         selected_id = selected_radio_text.split(':')[1].split('(')[0].strip()
-        
-        selected_row = top_mmi_rows_renamed[top_mmi_rows_renamed['ID'] == selected_id].iloc[0]
+
+        selected_row = sorted_event_list_renamed[sorted_event_list_renamed['ID'] == selected_id].iloc[0]
         st.write("Lien vers USGS :")
         st.markdown(f"[{selected_row['Lien vers USGS']}]({selected_row['Lien vers USGS']})")
+
 
         
     st.markdown("<h3 style='text-align: left;'>Sites à observer :</h3>", unsafe_allow_html=True)
