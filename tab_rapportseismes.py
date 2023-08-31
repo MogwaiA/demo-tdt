@@ -68,7 +68,9 @@ def rapports_seismes():
         )
 
         selected_id = st.radio("Sélectionner un ID :", top_mmi_rows_renamed['ID'])
-        st.write("Lien vers USGS :", top_mmi_rows_renamed[top_mmi_rows_renamed.ID==selected_id]['Lien vers USGS'].values)
+        selected_row = top_mmi_rows_renamed[top_mmi_rows_renamed['ID'] == selected_id].iloc[0]
+        st.write("Lien vers USGS :")
+        st.markdown(f"[{selected_row['Lien vers USGS']}]({selected_row['Lien vers USGS']})")
 
         
                 
