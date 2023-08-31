@@ -11,8 +11,8 @@ st.set_page_config(
 )
 
 tabs = {
-      "Carte par séisme": carte_par_eventid,
-      "Rapports": rapports_seismes
+      "Rapports": rapports_seismes,
+      "Carte par séisme": carte_par_eventid      
 }
 
 # Afficher les onglets
