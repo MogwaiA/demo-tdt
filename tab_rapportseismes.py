@@ -69,7 +69,8 @@ def rapports_seismes():
         )
         
         # Afficher le tableau formaté
-        st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']], unsafe_allow_html=True)
+        st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']])
+        
   
 
 
