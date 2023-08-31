@@ -44,21 +44,29 @@ def rapports_seismes():
         st.pyplot(plt)
     
     with col2:
-        # Afficher un tableau avec les 5 plus gros mmi
+    
+        st.subheader("Évènements les plus importants")
 
-        
-        st.subheader("Top 10 des évènements les plus importants")
-        top_mmi_rows = event_list.nlargest(10, 'properties.mmi')
-        
-        
-        top_mmi_rows_renamed = top_mmi_rows.rename(
-            columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
-        )
+        # Trier les événements par ordre décroissant du MMI
+        sorted_event_list = event_list.sort_values(by='properties.mmi', ascending=False)
 
-        selected_radio_text = st.radio(
+        # Afficher les événements triés par lot de 10
+        items_per_page = 10
+        num_pages = (len(sorted_event_list) + items_per_page - 1) // items_per_page
+
+        page = st.slider("Page", 1, num_pages, value=1)
+
+        start_idx = (page - 1) * items_per_page
+        end_idx = min(start_idx + items_per_page, len(sorted_event_list))
+
+        for _, row in sorted_event_list[start_idx:end_idx].iterrows():
+            selected_radio_text = st.radio(
             "Sélectionner un ID :",
-            [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in top_mmi_rows_renamed.iterrows()]
+            [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in sorted_event_list.iterrows()]
         )
+
+        # Afficher la pagination
+        st.write(f"Page {page} sur {num_pages}")
 
         # Extraire l'ID du texte sélectionné
         selected_id = selected_radio_text.split(':')[1].split('(')[0].strip()
