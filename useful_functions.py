@@ -12,7 +12,7 @@ from scipy.spatial.distance import cdist
 import openpyxl
 
 def load_data(file):
-    data = pd.read_csv(file) if file.name.endswith('.csv') else pd.read_excel(file, engine='openpyxl')
+    data = pd.read_csv(file,header=True,sep='') if file.name.endswith('.csv') else pd.read_excel(file,header=True, engine='openpyxl')
     return data
 
 
