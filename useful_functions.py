@@ -114,3 +114,21 @@ def link_xml_event(id, proxies=None):
         return url,title,time,mag,mmi
     except (requests.exceptions.RequestException, json.JSONDecodeError) as e:
         return None
+    
+def download_list_event(period,mmi=0):
+    # Obtenir la date et l'heure actuelles
+    current_datetime = datetime.now()
+
+    # Calculer la starttime en soustrayant la période de jours
+    start_datetime = current_datetime - timedelta(days=period)
+
+    # Convertir les objets datetime en chaînes de format AAAA-MM-JJTHH-MM-SS
+    start_time_str = start_datetime.strftime('%Y-%m-%dT%H:%M:%S')
+    end_time_str = current_datetime.strftime('%Y-%m-%dT%H:%M:%S')
+
+
+    response = requests.get("https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=start_datetime&endtime=current_datetime&minmmi=mmi")
+    data = json.loads(response.text)
+    df_event = pd.json_normalize(data["features"])
+
+    return df_event

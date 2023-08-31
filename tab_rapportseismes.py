@@ -8,7 +8,7 @@ def rapports_seismes():
     col_1, col_2 = st.columns(2)
 
     with col_1:
-        st.markdown("<h3 style='text-align: left;'>Sites à observer</h3>", unsafe_allow_html=True)
+        st.markdown("<h3 style='text-align: left;'>Sites à observer :</h3>", unsafe_allow_html=True)
 
         # Ajouter un widget de chargement de fichier
         uploaded_file = st.file_uploader("Charger une liste de coordonnées géographiques", type=["csv", "xlsx"])
@@ -41,6 +41,21 @@ def rapports_seismes():
         selected_days = period_days[period]
 
         st.write(f"Période sélectionnée : {period} ({selected_days} jours)")
+    
+    event_list=download_list_event(period)
+    
+    # Affichage d'une synthèse des données téléchargées
+    st.subheader("Histogramme du nombre d'id par mmi")
+    mmi_counts = event_list['mmi'].value_counts()
+    plt.bar(mmi_counts.index, mmi_counts.values)
+    plt.xlabel('MMI')
+    plt.ylabel('Nombre d\'évènements')
+    st.pyplot(plt)
+    
+    # Afficher un tableau avec les 5 plus gros mmi
+    st.subheader("Top 5 des évènements les plus importants")
+    top_mmi_rows = event_list.nlargest(5, 'mmi')
+    st.table(top_mmi_rows[['id', 'mmi', 'properties.url']])
 
   
 
