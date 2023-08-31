@@ -46,7 +46,7 @@ def rapports_seismes():
     
     # Affichage d'une synthèse des données téléchargées
     st.subheader("Histogramme du nombre d'id par mmi")
-    mmi_counts = event_list['mmi'].value_counts()
+    mmi_counts = event_list['properties.mmi'].value_counts()
     plt.bar(mmi_counts.index, mmi_counts.values)
     plt.xlabel('MMI')
     plt.ylabel('Nombre d\'évènements')
@@ -54,8 +54,8 @@ def rapports_seismes():
     
     # Afficher un tableau avec les 5 plus gros mmi
     st.subheader("Top 5 des évènements les plus importants")
-    top_mmi_rows = event_list.nlargest(5, 'mmi')
-    st.table(top_mmi_rows[['id', 'mmi', 'properties.url']])
+    top_mmi_rows = event_list.nlargest(5, 'properties.mmi')
+    st.table(top_mmi_rows[['id', 'properties.mmi', 'properties.url']])
 
   
 
