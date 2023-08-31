@@ -55,7 +55,7 @@ def rapports_seismes():
         )
 
         # Afficher les événements triés par lot de 10
-        items_per_page = 10
+        items_per_page = min(10,len(sorted_event_list_renamed))
         num_pages = (len(sorted_event_list_renamed) + items_per_page - 1) // items_per_page
 
         page = st.slider("Page", 1, num_pages, value=1)
