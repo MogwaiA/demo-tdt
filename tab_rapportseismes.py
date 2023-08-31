@@ -119,8 +119,8 @@ def rapports_seismes():
         sampled_grid = grid_event.sample(frac=0.05, random_state=42)
         minmmi = grid_event["MMI"].min()
         maxmmi = grid_event["MMI"].max()
-        center_lat = grid_event[grid_event["MMI"]==maxmmi]["Latitude"].values
-        center_lon = grid_event[grid_event["MMI"]==maxmmi]["Longitude"].values
+        center_lat = grid_event["Latitude"].mean()
+        center_lon = grid_event["Longitude"].mean()
 
         # Croiser entre le grid et la liste des sites observés
         mmi_sites=point_plus_proche(liste_coordonnees,grid_event)
