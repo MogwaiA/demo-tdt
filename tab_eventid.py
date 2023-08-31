@@ -63,14 +63,14 @@ def carte_par_eventid():
                     df = parse_link_grid_xml(xml_file_path)
                     # Le reste du code pour la création de la carte et l'affichage des données
                     sampled_df = df.sample(frac=0.05, random_state=42)
-                    minmmi = sampled_df["MMI"].min()
-                    maxmmi = sampled_df["MMI"].max()
+                    minmmi = df["MMI"].min()
+                    maxmmi = df["MMI"].max()
 
                     mmi_points_manuels=point_plus_proche(st.session_state.points_manuels,df)
 
                     # Créer la carte avec Folium
-                    center_lat = sampled_df["Latitude"].mean()
-                    center_lon = sampled_df["Longitude"].mean()
+                    center_lat = df["Latitude"].mean()
+                    center_lon = df["Longitude"].mean()
                     world_map = folium.Map(location=[center_lat, center_lon], zoom_start=5.3)
 
                     # Ajouter un marqueur pour l'épicentre

@@ -76,6 +76,77 @@ def rapports_seismes():
     if uploaded_file is not None:
         # Charger les données à partir du fichier
         df = load_data(uploaded_file)
+        liste_coordonnees = list(zip(df['Latitude'], df['Longitude']))
+
+        # Récupérer les informations des MMI du séisme
+        event = link_xml_event(seisme_id)
+        xml_file_path=event[0]
+        title=event[1]
+        time=event[2]
+        date = datetime.fromtimestamp(time/1000).strftime('%Y-%m-%d %H:%M:%S')
+        mag=event[3]
+        mmi=event[4]
+        
+        # Lire le grid.xml
+        grid_event = parse_link_grid_xml(xml_file_path)
+        sampled_grid = grid_event.sample(frac=0.05, random_state=42)
+        minmmi = grid_event["MMI"].min()
+        maxmmi = grid_event["MMI"].max()
+        center_lat = grid_event["Latitude"].mean()
+        center_lon = grid_event["Longitude"].mean()
+
+        # Croiser entre le grid et la liste des sites observés
+        mmi_sites=point_plus_proche(liste_coordonnees,grid_event)
+
+        # Création de la map
+        world_map = folium.Map(location=[center_lat, center_lon], zoom_start=5.3)
+        folium.Marker(
+            location=[center_lat, center_lon],
+             popup='Epicentre\nMMI :'+str(maxmmi),
+            icon=folium.Icon(color='black', prefix='fa', icon_size=100)
+        ).add_to(world_map)
+
+        # Ajouter les marqueurs pour les sites
+        for (lat, lon), mmi in zip(liste_coordonnees, mmi_sites):
+            if mmi==0: 
+                popup_content='Hors de la zone sismique' 
+            else: 
+                popup_content = f'Site \nMMI : {mmi}'
+            folium.Marker(
+                location=[lat, lon],
+                popup=popup_content,
+                icon=folium.Icon(color='darkblue', prefix='fa')
+            ).add_to(world_map)
+        
+        # Définir l'échelle de couleurs
+        custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
+        color_scale = folium.LinearColormap(custom_colors, vmin=minmmi, vmax=maxmmi)
+
+        # Ajouter les cercles colorés
+        for index, row in sampled_grid.iterrows():
+            lat = row["Latitude"]
+            lon = row["Longitude"]
+            mmi = row["MMI"]
+            folium.CircleMarker(
+                location=(lat, lon),
+                radius=20,
+                color=None,
+                fill=True,
+                fill_color=color_scale(mmi),
+                fill_opacity=0.01,
+            ).add_to(world_map)
+
+        color_scale.caption = "Modified Mercalli Intensity (MMI)"
+        color_scale.add_to(world_map)
+
+        # Charger l'application Streamlit
+        st.title(title)
+        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(mmi)+".")
+
+        # Afficher la carte Folium dans Streamlit
+        folium_static(world_map)
+
+
 
         
         
