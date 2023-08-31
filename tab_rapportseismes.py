@@ -67,8 +67,8 @@ def rapports_seismes():
             columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
         )
 
-        selected_id = st.radio("Sélectionner un ID :", top_mmi_rows['ID'])
-        st.write("Lien vers USGS :", selected_row['properties.url'])
+        selected_id = st.radio("Sélectionner un ID :", top_mmi_rows_renamed['ID'])
+        st.write("Lien vers USGS :", top_mmi_rows_renamed['Lien vers USGSl'])
 
         
                 
