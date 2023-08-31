@@ -72,10 +72,10 @@ def rapports_seismes():
 
         st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']])
 
-        for idx, row in top_mmi_rows.iterrows():
-            id_checked = st.checkbox(f"ID {row['id']} (MMI: {row['mmi']})", key=row['id'])
+        for idx, row in top_mmi_rows_renamed.iterrows():
+            id_checked = st.checkbox(f"ID {row['ID']} (MMI: {row['MMI']})", key=row['ID'])
             if id_checked:
-                selected_ids.append(row['id'])
+                selected_ids.append(row['ID'])
                 st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']])
 
         
