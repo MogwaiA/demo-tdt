@@ -59,8 +59,17 @@ def rapports_seismes():
         # Afficher un tableau avec les 5 plus gros mmi
         st.subheader("Top 10 des évènements les plus importants")
         top_mmi_rows = event_list.nlargest(10, 'properties.mmi')
-        st.table(top_mmi_rows[['id', 'properties.mmi', 'properties.url']])
 
+        top_mmi_rows['properties.url'] = top_mmi_rows['properties.url'].apply(
+            lambda url: f'<a href="{url}" target="_blank">{url}</a>'
+        )
+
+        top_mmi_rows_renamed = top_mmi_rows.rename(
+            columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
+        )
+        
+        # Afficher le tableau formaté
+        st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']], unsafe_allow_html=True)
   
 
 
