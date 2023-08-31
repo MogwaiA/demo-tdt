@@ -77,6 +77,7 @@ def rapports_seismes():
         # Charger les données à partir du fichier
         df = load_data(uploaded_file)
         liste_coordonnees = list(zip(df['Latitude'], df['Longitude']))
+        value=list(df["TIV"])
 
         # Récupérer les informations des MMI du séisme
         event = link_xml_event(selected_id)
@@ -107,11 +108,11 @@ def rapports_seismes():
         ).add_to(world_map)
 
         # Ajouter les marqueurs pour les sites
-        for (lat, lon), mmi in zip(liste_coordonnees, mmi_sites):
+        for (lat, lon), mmi,value in zip(liste_coordonnees, mmi_sites,value):
             if mmi==0: 
                 popup_content='Hors de la zone sismique' 
             else: 
-                popup_content = f'Site \nMMI : {mmi}'
+                popup_content = f'Site \nMMI : {mmi}\nTIV : {round(value/10^3,1)k€}'
             folium.Marker(
                 location=[lat, lon],
                 popup=popup_content,
