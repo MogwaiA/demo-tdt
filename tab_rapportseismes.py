@@ -55,7 +55,13 @@ def rapports_seismes():
             columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
         )
 
-        selected_id = st.radio("Sélectionner un ID :", top_mmi_rows_renamed['ID'])
+        selected_id = st.radio(
+            "Sélectionner un ID :",
+            [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in top_mmi_rows_renamed.iterrows()]
+        )
+
+        # Extraire l'ID du texte sélectionné
+        selected_id = int(selected_id.split(':')[1].split('(')[0].strip())
         selected_row = top_mmi_rows_renamed[top_mmi_rows_renamed['ID'] == selected_id].iloc[0]
         st.write("Lien vers USGS :")
         st.markdown(f"[{selected_row['Lien vers USGS']}]({selected_row['Lien vers USGS']})")
