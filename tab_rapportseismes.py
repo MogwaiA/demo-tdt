@@ -54,22 +54,28 @@ def rapports_seismes():
             columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
         )
 
-        # Afficher les événements triés par lot de 10
-        items_per_page = min(10,len(sorted_event_list_renamed))
-        num_pages = (len(sorted_event_list_renamed) + items_per_page - 1) // items_per_page if len(sorted_event_list_renamed)>10 else 1
+        if len(sorted_event_list_renamed)<=10:
+            selected_radio_text = st.radio(
+                "Sélectionner un ID :",
+                [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in sorted_event_list_renamed.iterrows()]
+            )
+        else:
+            # Afficher les événements triés par lot de 10
+            items_per_page = 10
+            num_pages = (len(sorted_event_list_renamed) + items_per_page - 1) // items_per_page
 
-        page = st.slider("Page", 1, num_pages, value=1)
+            page = st.slider("Page", 1, num_pages, value=1)
 
-        start_idx = (page - 1) * items_per_page
-        end_idx = min(start_idx + items_per_page, len(sorted_event_list_renamed))
+            start_idx = (page - 1) * items_per_page
+            end_idx = min(start_idx + items_per_page, len(sorted_event_list_renamed))
 
-        selected_radio_text = st.radio(
-            "Sélectionner un ID :",
-            [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
-        )
+            selected_radio_text = st.radio(
+                "Sélectionner un ID :",
+                [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
+            )
 
-        # Afficher la pagination
-        st.write(f"Page {page} sur {num_pages}")
+            # Afficher la pagination
+            st.write(f"Page {page} sur {num_pages}")
 
         # Extraire l'ID du texte sélectionné
         selected_id = selected_radio_text.split(':')[1].split('(')[0].strip()
