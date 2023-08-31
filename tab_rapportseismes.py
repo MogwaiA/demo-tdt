@@ -43,15 +43,19 @@ def rapports_seismes():
         st.write(f"Période sélectionnée : {period} ({selected_days} jours)")
     
     event_list=download_list_event(selected_days)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # Affichage d'une synthèse des données téléchargées
+        st.subheader("Histogramme du nombre d'id par mmi")
+        mmi_counts = event_list['properties.mmi'].value_counts()
+        plt.bar(mmi_counts.index, mmi_counts.values)
+        plt.xlabel('MMI')
+        plt.ylabel('Nombre d\'évènements')
+        st.pyplot(plt)
     
-    # Affichage d'une synthèse des données téléchargées
-    st.subheader("Histogramme du nombre d'id par mmi")
-    mmi_counts = event_list['properties.mmi'].value_counts()
-    plt.bar(mmi_counts.index, mmi_counts.values)
-    plt.xlabel('MMI')
-    plt.ylabel('Nombre d\'évènements')
-    st.pyplot(plt)
-    
+    with col2:
     # Afficher un tableau avec les 5 plus gros mmi
     st.subheader("Top 5 des évènements les plus importants")
     top_mmi_rows = event_list.nlargest(5, 'properties.mmi')
