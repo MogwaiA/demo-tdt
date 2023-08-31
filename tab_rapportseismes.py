@@ -79,7 +79,7 @@ def rapports_seismes():
         liste_coordonnees = list(zip(df['Latitude'], df['Longitude']))
 
         # Récupérer les informations des MMI du séisme
-        event = link_xml_event(seisme_id)
+        event = link_xml_event(selected_id)
         xml_file_path=event[0]
         title=event[1]
         time=event[2]
