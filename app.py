@@ -10,7 +10,7 @@ import json
 import matplotlib
 from scipy.spatial.distance import cdist
 from useful_functions import *
-import carte_by_eventid
+from carte_by_eventid import *
 
 
 st.set_page_config(
