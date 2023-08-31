@@ -61,7 +61,7 @@ with col_2:
         # Ajouter une colonne de boutons de suppression
         df_points_manuels["Action"] = ""
         for idx in df_points_manuels.index:
-            delete_button = st.button("🗑️", key="🗑️")
+            delete_button = st.button("🗑️", key="delete")
             df_points_manuels.at[idx, "Action"] = delete_button
 
         # Filtrer les lignes où le bouton de suppression n'a pas été cliqué
