@@ -134,9 +134,10 @@ def rapports_seismes():
         ).add_to(world_map)
 
         # Ajouter les marqueurs pour les sites
+        c=0
+        val=0
         for (lat, lon), mmi,value in zip(liste_coordonnees, mmi_sites,values):
-            c=0
-            val=0
+
             if mmi==0: 
                 popup_content='Hors de la zone sismique' 
             else: 
