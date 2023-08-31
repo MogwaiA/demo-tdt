@@ -1,3 +1,5 @@
+import streamlit as st
+
 def carte_par_eventid():
     # Personnalisation de la mise en page avec du code HTML
     st.markdown("<h1 style='text-align: left;'>Carte de Sismicité</h1>", unsafe_allow_html=True)
