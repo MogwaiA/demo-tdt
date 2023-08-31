@@ -69,8 +69,8 @@ def rapports_seismes():
         )
         
         # Afficher le tableau formaté
-        st.table(top_mmi_rows_renamed[['ID', 'MMI', 'Lien vers USGS']])
-        
+        for index, row in top_mmi_rows_renamed.iterrows():
+            st.write(f"ID: {row['ID']}, MMI: {row['MMI']}, URL: [{row['URL']}]({row['URL']})")
   
 
 
