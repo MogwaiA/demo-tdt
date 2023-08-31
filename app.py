@@ -1,15 +1,4 @@
 import streamlit as st
-import pandas as pd
-from streamlit_folium import folium_static
-import xml.etree.ElementTree as ET
-import os
-import folium
-import requests
-from datetime import datetime
-import json
-import matplotlib
-from scipy.spatial.distance import cdist
-from useful_functions import *
 from tab_eventid import carte_par_eventid
 from tab_rapportseismes import rapports_seismes
 
