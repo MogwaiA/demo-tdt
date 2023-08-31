@@ -112,7 +112,7 @@ def rapports_seismes():
             if mmi==0: 
                 popup_content='Hors de la zone sismique' 
             else: 
-                popup_content = f'Site \nMMI : {mmi}\nTIV : {round(value/10^3,1)k€}'
+                popup_content = f'Site \nMMI : {mmi}\nTIV : {round(value/10^3,1)} k$'
             folium.Marker(
                 location=[lat, lon],
                 popup=popup_content,
