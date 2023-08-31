@@ -10,7 +10,7 @@ def rapports_seismes():
 
     if uploaded_file is not None:
         # Charger les données à partir du fichier
-        df = load_data(uploaded_file)
+        df = pd.read_csv(uploaded_file) if file.name.endswith('.csv') else pd.read_excel(uploaded_file, engine='openpyxl')
 
         # Afficher les données
         st.dataframe(df)
