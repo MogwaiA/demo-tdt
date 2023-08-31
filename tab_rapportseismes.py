@@ -5,7 +5,7 @@ def rapports_seismes():
     # Personnalisation de la mise en page avec du code HTML
     st.markdown("<h1 style='text-align: left;'>Rapports en temps réel</h1>", unsafe_allow_html=True)
 
-=
+
     # Widget pour choisir la période
     st.markdown("<h3>Choisir une période :</h3>", unsafe_allow_html=True)
     period = st.selectbox(
