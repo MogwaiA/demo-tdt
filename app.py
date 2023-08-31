@@ -11,6 +11,7 @@ import matplotlib
 from scipy.spatial.distance import cdist
 from useful_functions import *
 from tab_eventid import carte_par_eventid
+from tab_rapportseismes import rapports_seismes
 
 
 st.set_page_config(
@@ -21,7 +22,8 @@ st.set_page_config(
 )
 
 tabs = {
-      "Visualisation Sismicité": carte_par_eventid
+      "Carte par séisme": carte_par_eventid,
+      "Rapports": rapports_seismes
 }
 
 # Afficher les onglets

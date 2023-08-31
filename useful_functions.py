@@ -1,3 +1,8 @@
+def load_data(file):
+    data = pd.read_csv(file) if file.name.endswith('.csv') else pd.read_excel(file, engine='openpyxl')
+    return data
+
+
 # Fonction pour parser le fichier XML et obtenir le DataFrame
 def parse_file_grid_xml(xml_file_path):
     tree = ET.parse(xml_file_path)
