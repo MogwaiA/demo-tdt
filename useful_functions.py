@@ -116,6 +116,9 @@ def link_xml_event(id, proxies=None):
         return None
     
 def download_list_event(period,mmi=0):
+
+    period = int(period)
+    
     # Obtenir la date et l'heure actuelles
     current_datetime = datetime.now()
 
