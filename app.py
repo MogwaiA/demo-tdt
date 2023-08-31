@@ -10,7 +10,7 @@ import json
 import matplotlib
 from scipy.spatial.distance import cdist
 from useful_functions import *
-from carte_by_eventid import *
+from tab_eventid import *
 
 
 st.set_page_config(
@@ -20,7 +20,7 @@ st.set_page_config(
     initial_sidebar_state="expanded",  # Barre latérale ouverte par défaut
 )
 
-carte_by_eventid
+tab_eventid.carte_by_eventid
 
 
 
