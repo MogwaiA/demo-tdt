@@ -135,15 +135,21 @@ def rapports_seismes():
 
         # Ajouter les marqueurs pour les sites
         for (lat, lon), mmi,value in zip(liste_coordonnees, mmi_sites,values):
+            c=0
+            val=0
             if mmi==0: 
                 popup_content='Hors de la zone sismique' 
             else: 
+                c=c+1
+                val=val+value
                 popup_content = f'Site \nMMI : {mmi}\nTIV : {round(value/10**3,1)} k$'
             folium.Marker(
                 location=[lat, lon],
                 popup=popup_content,
                 icon=folium.Icon(color='darkblue', prefix='fa')
             ).add_to(world_map)
+        
+
         
         # Définir l'échelle de couleurs
         custom_colors = ['lightgreen', 'yellow', 'orange', 'red', 'darkred']
@@ -168,10 +174,12 @@ def rapports_seismes():
 
         # Charger l'application Streamlit
         st.title(title)
-        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI moyen "+str(round(mmi_event,1))+".")
+        st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI "+str(round(mmi_event,1))+".")
 
         # Afficher la carte Folium dans Streamlit
         folium_static(world_map)
+
+        st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {c} sites pour une valeur assurée totale de {round(val,1)} k€ </h1>", unsafe_allow_html=True)
 
 
 

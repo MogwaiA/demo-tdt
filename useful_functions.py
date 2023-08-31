@@ -78,7 +78,7 @@ def point_plus_proche(liste,grid):
         lat_min, lat_max = grid["Latitude"].min(), grid["Latitude"].max()
         lon_min, lon_max = grid["Longitude"].min(), grid["Longitude"].max()
         
-        # Calcul des bornes du carré défini par latitude et longitude (arrondies à la dixième près)
+        # Rétrecicement de l'espace de recherche
         lat_floor, lat_roof = lat0-0.5,lat0+0.5
         lon_floor, lon_roof = lon0-0.5,lon0+0.5
         
