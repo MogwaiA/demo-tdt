@@ -44,7 +44,7 @@ def rapports_seismes():
         mmi_counts = mmi_discretized.value_counts().sort_index()
 
         # Créer l'histogramme
-        plt.bar(mmi_counts.index, mmi_counts.values, width=1, align='edge')
+        plt.bar(mmi_counts.index.mid, mmi_counts.values, width=1, align='center')
         plt.xlabel('MMI')
         plt.ylabel("Nombre d'événements")
         plt.xticks(np.arange(0, 11, 1))
