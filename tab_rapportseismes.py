@@ -208,7 +208,7 @@ def rapports_seismes():
 
             # Utilisez une boucle pour ajouter les lignes de données au tableau HTML
             html_table_rows = ""
-            for site_data in top_sites:
+            for _,row in top_sites.iterrows():
                 html_table_row = """
                 <tr>
                     <td>{}</td>
@@ -219,12 +219,12 @@ def rapports_seismes():
                     <td>{:.1f} k€</td>
                 </tr>
                 """.format(
-                    site_data["Nom"],
-                    site_data["Entite"],
-                    site_data["Latitude"],
-                    site_data["Longitude"],
-                    site_data["MMI"],
-                    site_data["value"]
+                    row["Nom"],
+                    row["Entite"],
+                    row["Latitude"],
+                    row["Longitude"],
+                    row["MMI"],
+                    row["value"]
                 )
                 html_table_rows += html_table_row
 
