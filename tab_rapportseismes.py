@@ -72,7 +72,7 @@ def rapports_seismes():
 
                 ordre = st.selectbox(
                     "Dans l'ordre...",
-                    ["Croissant", "Décroissant"]
+                    ["Décroissant","Croissant"]
                 )
         
             # Trier les événements par ordre décroissant du MMI
@@ -84,7 +84,7 @@ def rapports_seismes():
 
             ordre_cle={
                 "Croissant":True,
-                "Decroissant":False
+                "Décroissant":False
             }
 
             sorted_event_list = event_list.sort_values(by=tri_cle[tri], ascending=ordre_cle[ordre])
