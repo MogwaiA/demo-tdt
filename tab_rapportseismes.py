@@ -143,9 +143,9 @@ def rapports_seismes():
         for (lat, lon), mmi,value,nom,entite in zip(liste_coordonnees, mmi_sites,values,noms,entites):
 
             if mmi==0: 
-                popup_content=f'Site {nom}\n{entite}\nHors de la zone sismique' 
+                popup_content=f'Site {nom}\n {entite}\n Hors de la zone sismique' 
             else: 
-                popup_content = f'Site {nom}\n{entite}\nMMI : {mmi}\nTIV : {round(value/10**3,1)} k$'
+                popup_content = f'Site {nom}\n {entite}\n MMI : {mmi}\n TIV : {round(value/10**3,1)} k$'
             folium.Marker(
                 location=[lat, lon],
                 popup=popup_content,
@@ -188,10 +188,15 @@ def rapports_seismes():
         st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h4>", unsafe_allow_html=True)
 
         if n_sites_touches>0:
+
             st.subheader("5 most exposed sites")
             # Trier le DataFrame par ordre décroissant de MMI et sélectionner les 5 premiers
             top_sites = df.sort_values(by='MMI', ascending=False).head(5)
-            top_sites.value=round(top_sites["TIV"],2)
+            top_sites["TIV"]=round(top_sites["TIV"],2)
+
+            top_sites = top_sites.rename(
+                columns={'TIV': 'Insured Value', 'Entite': 'Filiale'}
+            )
             top_sites_html = top_sites.to_html(index=False)
 
             # Afficher le contenu HTML dans Streamlit
