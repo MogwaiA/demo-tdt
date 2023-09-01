@@ -185,23 +185,8 @@ def rapports_seismes():
         # Créer un tableau HTML personnalisé transposé
         st.subheader("Repartition Values by Mercalli Intensity zone")
 
-                
-        locale.setlocale(locale.LC_ALL, 'fr_FR.UTF-8')  # Configurez la locale en français pour utiliser le format "1 234,56 €"
+        
 
-        # Calculer les sommes des valeurs pour chaque MMI
-        somme_values_mmi_0 = sum(value for mmi, value in zip(mmi_sites, values) if mmi == 0)
-        somme_values_mmi_1 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 0 and mmi <= 1))
-        somme_values_mmi_2 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 1 and mmi <= 2))
-        somme_values_mmi_3 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 2 and mmi <= 3))
-        somme_values_mmi_4 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 3 and mmi <= 4))
-        somme_values_mmi_5 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 4 and mmi <= 5))
-        somme_values_mmi_6 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 5 and mmi <= 6))
-        somme_values_mmi_7 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 6 and mmi <= 7))
-        somme_values_mmi_8 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 7 and mmi <= 8))
-        somme_values_mmi_9 = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 8 and mmi <= 9))
-        somme_values_mmi_10plus = sum(value for mmi, value in zip(mmi_sites, values) if (mmi > 9))
-
-        # Générez le tableau HTML avec les valeurs au format monétaire
         html_table = """
         <table>
         <tr>
@@ -249,28 +234,31 @@ def rapports_seismes():
         </table>
         """.format(
             sum(1 for mmi in mmi_sites if mmi == 0),
-            sum(1 for mmi in mmi_sites if (mmi > 0 and mmi <= 1)),
-            sum(1 for mmi in mmi_sites if (mmi > 1 and mmi <= 2)),
-            sum(1 for mmi in mmi_sites if (mmi > 2 and mmi <= 3)),
-            sum(1 for mmi in mmi_sites if (mmi > 3 and mmi <= 4)),
-            sum(1 for mmi in mmi_sites if (mmi > 4 and mmi <= 5)),
-            sum(1 for mmi in mmi_sites if (mmi > 5 and mmi <= 6)),
-            sum(1 for mmi in mmi_sites if (mmi > 6 and mmi <= 7)),
-            sum(1 for mmi in mmi_sites if (mmi > 7 and mmi <= 8)),
-            sum(1 for mmi in mmi_sites if (mmi > 8 and mmi <= 9)),
+            sum(1 for mmi in mmi_sites if (mmi>0 and mmi <= 1)),
+            sum(1 for mmi in mmi_sites if (mmi > 1 and mmi<=2)),
+            sum(1 for mmi in mmi_sites if (mmi > 2 and mmi<=3)),
+            sum(1 for mmi in mmi_sites if (mmi > 3 and mmi<=4)),
+            sum(1 for mmi in mmi_sites if (mmi > 4 and mmi<=5)),
+            sum(1 for mmi in mmi_sites if (mmi > 5 and mmi<=6)),
+            sum(1 for mmi in mmi_sites if (mmi > 6 and mmi<=7)),
+            sum(1 for mmi in mmi_sites if (mmi > 7 and mmi<=8)),
+            sum(1 for mmi in mmi_sites if (mmi > 8 and mmi<=9)),
             sum(1 for mmi in mmi_sites if (mmi > 9)),
-            locale.currency(somme_values_mmi_0 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_1 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_2 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_3 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_4 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_5 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_6 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_7 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_8 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_9 / 10**3, grouping=True, symbol="k€"),
-            locale.currency(somme_values_mmi_10plus / 10**3, grouping=True, symbol="k€")
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 0) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>0 and mmi <= 1)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>1 and mmi <= 2)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>2 and mmi <= 3)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>3 and mmi <= 4)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>4 and mmi <= 5)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>5 and mmi <= 6)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>6 and mmi <= 7)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>7 and mmi <= 8)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>8 and mmi <= 9)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>9)) / 10**3, 1)
         )
 
         # Afficher le tableau HTML dans Streamlit
         st.markdown(html_table, unsafe_allow_html=True)
+
+
+
