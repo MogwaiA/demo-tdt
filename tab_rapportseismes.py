@@ -61,10 +61,19 @@ def rapports_seismes():
         
         with col2:
 
-            tri = st.selectbox(
-                "Trier les évènements par...",
-                ["MMI", "Magnitude","Date"]
-            )
+            sel1, sel2 = st.columns(2)
+            with sel1:
+
+                tri = st.selectbox(
+                    "Trier les évènements par...",
+                    ["MMI", "Magnitude","Date"]
+                )
+            with sel2:
+
+                ordre = st.selectbox(
+                    "Dans l'ordre...",
+                    ["Croissant", "Décroissant"]
+                )
         
             # Trier les événements par ordre décroissant du MMI
             tri_cle = {
@@ -73,7 +82,12 @@ def rapports_seismes():
                 "Date": 'properties.time'
             }
 
-            sorted_event_list = event_list.sort_values(by=tri_cle[tri], ascending=False)
+            ordre_cle={
+                "Croissant":True,
+                "Decroissant":False
+            }
+
+            sorted_event_list = event_list.sort_values(by=tri_cle[tri], ascending=ordre_cle[ordre])
 
             sorted_event_list_renamed = sorted_event_list.rename(
                 columns={'id': 'ID', 'properties.mmi': 'MMI','properties.mag': 'Magnitude', 'properties.url': 'Lien vers USGS'}
