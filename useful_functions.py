@@ -12,6 +12,9 @@ from scipy.spatial.distance import cdist
 import openpyxl
 import matplotlib.pyplot as plt
 import numpy as np
+from fpdf import FPDF
+from PIL import Image
+import io
 
 def load_data(file):
     data = pd.read_csv(file,sep=',') if file.name.endswith('.csv') else pd.read_excel(file, engine='openpyxl')
@@ -140,3 +143,49 @@ def download_list_event(period,mmi=0):
     df_event = pd.json_normalize(data["features"])
 
     return df_event
+
+def generate_pdf(event_data, n_sites_touches, mmi_sites, values, top_sites_html, world_map):
+    pdf = FPDF()
+    pdf.add_page()
+    pdf.set_font("Arial", size=12)
+
+    # Ajoutez le titre centré en haut de la page
+    pdf.set_font("Arial", size=18)
+    pdf.cell(200, 10, txt="EARTHQUAKE @LERTING", ln=True, align='C')
+
+    # Ajoutez un encadré avec les informations spécifiées
+    pdf.set_fill_color(220, 220, 220)  # Couleur de fond de l'encadré
+    pdf.rect(10, 40, 190, 30, "F")  # Coordonnées x, y, largeur, hauteur
+    pdf.set_xy(12, 45)  # Position du texte à l'intérieur de l'encadré
+
+    # Ligne 1 : Number of exposed locations
+    pdf.cell(90, 10, txt="Number of exposed locations : " + str(n_sites_touches), align='L')
+
+    # Ligne 2 : Number of locations exposed to very strong shaking (MMI > 6)
+    pdf.cell(90, 10, txt="Number of locations exposed to very strong shaking (MMI > 6) : " + str(sum(mmi > 6 for mmi in mmi_sites)), align='R')
+    pdf.ln()
+
+    # Ligne 3 : Values in the area exposed to very strong shaking (MMI > 6)
+    pdf.cell(90, 10, txt="Values in the area exposed to very strong shaking (MMI > 6) : " + str(round(sum(value for mmi, value in zip(mmi_sites, values) if mmi > 0), 2)), align='L')
+
+    # Calculez la moitié de la largeur de la page
+    half_page_width = pdf.w / 2
+
+    # Affichez le tableau top_sites_html sur la moitié de la page gauche
+    pdf.set_xy(10, 100)  # Position du tableau
+    pdf.multi_cell(half_page_width, 10, top_sites_html)  # Affichez le contenu du tableau en plusieurs lignes
+
+    # Générez une capture d'écran de folium_static(world_map) et insérez-la dans le PDF
+    img_buffer = io.BytesIO()
+    world_map.save(img_buffer, format='PNG')
+    img = Image.open(img_buffer)
+    img_width = half_page_width - 10  # Ajustez la largeur de l'image selon vos besoins
+    img_height = img_width * img.height / img.width
+    pdf.image(img_buffer, x=half_page_width + 10, y=100, w=img_width, h=img_height)
+
+    # Ajoutez ici le reste du contenu du PDF en utilisant les informations de 'event_data'
+    # Par exemple, vous pouvez ajouter des tableaux, des graphiques, etc.
+
+    pdf_file_path = "rapport_seismes.pdf"
+    pdf.output(pdf_file_path)
+    return pdf_file_path
