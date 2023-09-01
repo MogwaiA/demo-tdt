@@ -186,11 +186,43 @@ def rapports_seismes():
 
         st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h4>", unsafe_allow_html=True)
 
-        st.subheader("5 most exposed sites")
-        top_sites = df.sort_values(by='MMI', ascending=False).head(5)
+        if n_sites_touches>0:
+            st.subheader("5 most exposed sites")
+            # Trier le DataFrame par ordre décroissant de MMI et sélectionner les 5 premiers
+            top_sites = df.sort_values(by='MMI', ascending=False).head(5)
 
-        st.dataframe(top_sites)
- 
+            # Créer un tableau HTML pour ces 5 sites
+            html_table_top_sites = """
+            <table>
+                <tr>
+                    <th>ID</th>
+                    <th>Nom</th>
+                    <th>Entité</th>
+                    <th>Latitude</th>
+                    <th>Longitude</th>
+                    <th>MMI</th>
+                    <th>Valeur assurée (k€)</th>
+                </tr>
+            """
+
+            for _, row in top_sites.iterrows():
+                html_table_top_sites += f"""
+                <tr>
+                    <td>{row['ID']}</td>
+                    <td>{row['Nom']}</td>
+                    <td>{row['Entité']}</td>
+                    <td>{row['Latitude']}</td>
+                    <td>{row['Longitude']}</td>
+                    <td>{row['MMI']}</td>
+                    <td>{row['TIV']} k€</td>
+                </tr>
+                """
+
+            html_table_top_sites += "</table>"
+            
+            st.markdown(html_table_top_sites, unsafe_allow_html=True)
+
+        
         # Créer un tableau HTML personnalisé transposé
         st.subheader("Repartition Values by Mercalli Intensity zone")
         
