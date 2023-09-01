@@ -180,89 +180,82 @@ def rapports_seismes():
         var = round(sum(value for mmi, value in zip(mmi_sites, values) if mmi > 0) / 10**3, 1)
 
         st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h1>", unsafe_allow_html=True)
-        # Afficher un tableau HTML personnalisé
-        st.subheader("Tableau des données par MMI (HTML)")
+        
+        # Créer un tableau HTML personnalisé transposé
+        st.subheader("Repartition Values by Mercalli Intensity zone")
 
         html_table = """
         <table>
         <tr>
-            <th>MMI (chiffres romains)</th>
-            <th>Nombre de Sites Touchés</th>
-            <th>Somme des Values (k€)</th>
+            <th>MERCALLI INTENSITY</th>
+            <th>Not exposed</th>
+            <th>I</th>
+            <th>II</th>
+            <th>III</th>
+            <th>IV</th>
+            <th>V</th>
+            <th>VI</th>
+            <th>VII</th>
+            <th>VIII</th>
+            <th>IX</th>
+            <th>X</th>
         </tr>
         <tr>
-            <td>MMI 0</td>
+            <td>Number of exposed sites</td>
+            <td>{}</td>
+            <td>{}</td>
+            <td>{}</td>
+            <td>{}</td>
+            <td>{}</td>
+            <td>{}</td>
+            <td>{}</td>
+            <td>{}</td>
+            <td>{}</td>
             <td>{}</td>
             <td>{}</td>
         </tr>
         <tr>
-            <td>MMI I</td>
+            <td>Insured Values (k€)</td>
             <td>{}</td>
             <td>{}</td>
-        </tr>
-        <tr>
-            <td>MMI II</td>
             <td>{}</td>
             <td>{}</td>
-        </tr><tr>
-            <td>MMI III</td>
             <td>{}</td>
             <td>{}</td>
-        </tr><tr>
-            <td>MMI IV</td>
             <td>{}</td>
             <td>{}</td>
-        </tr><tr>
-            <td>MMI V</td>
             <td>{}</td>
-            <td>{}</td>
-        </tr><tr>
-            <td>MMI VI</td>
-            <td>{}</td>
-            <td>{}</td>
-        </tr><tr>
-            <td>MMI VII</td>
-            <td>{}</td>
-            <td>{}</td>
-        </tr><tr>
-            <td>MMI VIII</td>
-            <td>{}</td>
-            <td>{}</td>
-        </tr><tr>
-            <td>MMI IX</td>
-            <td>{}</td>
-            <td>{}</td>
-        </tr><tr>
-            <td>MMI X</td>
             <td>{}</td>
             <td>{}</td>
         </tr>
         </table>
         """.format(
             sum(1 for mmi in mmi_sites if mmi == 0),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 0) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 1) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 2),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 2) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 3),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 3) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 4),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 4) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 5),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 5) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 6),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 6) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 7),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 7) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 8),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 8) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 9),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 9) / 10**3, 1),
             sum(1 for mmi in mmi_sites if mmi == 10),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 0) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 1) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 2) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 3) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 4) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 5) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 6) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 7) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 8) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 9) / 10**3, 1),
             round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 10) / 10**3, 1)
         )
 
+        # Afficher le tableau HTML dans Streamlit
         st.markdown(html_table, unsafe_allow_html=True)
+
 
 
