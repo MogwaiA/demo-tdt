@@ -33,7 +33,8 @@ def rapports_seismes():
     st.write(f"Période sélectionnée : {period} ({selected_days} jours)")
     
     event_list=download_list_event(selected_days)
-    if len(event_lis)>0:
+
+    if len(event_list)>0:
         col1, col2 = st.columns(2)
 
         with col1:
