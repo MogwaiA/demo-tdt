@@ -28,41 +28,33 @@ Permettant de récupérer tous les tremblements de terre ayant un MMI >= mmi, et
 Par ailleurs, l'utilisateur peut lui-même uploader une liste de coordonnées géographiques afin de croiser avec les informations USGS.
 
 ## Méthodes de traitement des données :
-
-
-## Vérifications d’assurance-qualité faites sur les données :
+Une fois les données des tremblements de terres récupérées depuis l'API USGS, et le fichier de l'utilisateur uploadé, le code traite les données en deux étapes :
+1) Récupération des informations précises sur les impacts du tremblement de terre:
+   	Récupération du grid.xml via une seconde requête sur l'API du site d'USGS sur l'évènement sélectionné par l'utilisateur.
+   	Lien API pour l'évènement 'id' :https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&eventid={id}
+3) Croisement entre les données du grid.xml et les coordonnées géographiques afin de déterminer quels sont les impacts précis sur les points observés.
 
 ## Autres informations contextuelles :
-<Toute information que vous considérez importante pour évaluer la qualité du jeu de données ou pour sa réutilisation : par exemple, des informations concernant les logiciels nécessaires pour interpréter les données.
-Si applicable et non-inclus préalablement, ajouter les noms complets et les versions de tous les logiciels, de tous les paquets et de toutes les librairies nécessaires pour lire et interpréter les données *e.g.* pour compiler les scripts.>
+Les données étant récupérées automatiquement sur le site USGS, la précision et l'exhaustivité de la donnée est dépendante de la qualité des informations présentes sur ce site. 
 
 # APERCUS DES DONNEES ET FICHIERS
 
-
 ## Convention de nommage des fichiers :
+Le nom du fichier uploadé par l'utilisateur n'a pas d'importance.
 
-## Arborescence/plan de classement des fichiers :
+# INFORMATIONS SPECIFIQUES AUX DONNEES POUR LE FICHIER UPLOADE PAR L'UTILISATEUR
 
-
-# INFORMATIONS SPECIFIQUES AUX DONNEES POUR : [NOM DU FICHIER]
-
-<Le cas échéant, reproduire cette section pour chaque dossier ou fichier.
-Les éléments se répétant peuvent être expliqués dans une section initiale commune.>
-
-<Pour les données tabulaires, fournir un dictionaire des données/manuel de codage contenant les information suivantes :>
 ## Liste des variables/entêtes de colonne :
 
-Pour chaque nom de variable ou entête de colonne, indiquer :
+Les informations sont les suivantes : 
+Nom de la variable | Description | Format
+
  
-	-- le nom complet de la variable sous forme “lisible par les humains” ; 
-	-- la description de la variable ; 
-	-- unité de mesure, si applicable ; 
-	-- séparateur décimal *i.e.* virgule ou point, si applicable ; 
-	-- valeurs autorisées : liste ou plage de valeurs, ou domaine ;
-	-- format, si applicable, e.g. date>
+	-- Nom | Nom du site observé | Caractère
+	-- Entité | Nom de l'entité dans laquelle se trouve le site | Caractère
+	-- Latitude | Latitude du site (coordonnée géographique) | float
+	-- Longitude | Longitude du site (coordonnée géographique) | float
+	-- TIV | Valeur assurée (Total Insured Value) | float
 
-## Code des valeurs manquantes : 
-<Definir les codes ou symboles utilisés pour les valeurs manquantes.>
 
-## Informations additionnelles : 
-<Toute information que vous jugez utile pour mieux comprendre le fichier>
+Toutes ces variables sont obligatoires.
