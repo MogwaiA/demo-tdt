@@ -189,7 +189,7 @@ def rapports_seismes():
             st.subheader("5 most exposed sites")
             # Trier le DataFrame par ordre décroissant de MMI et sélectionner les 5 premiers
             top_sites = df.sort_values(by='MMI', ascending=True).head(5)
-            top_sites.value=round(top_sites["value"],2)
+            top_sites.value=round(top_sites["TIV"],2)
             top_sites_html = top_sites.to_html(index=False)
 
             # Afficher le contenu HTML dans Streamlit
