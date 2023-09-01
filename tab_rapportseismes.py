@@ -186,10 +186,10 @@ def rapports_seismes():
         # Calculer le nombre de sites touchés par MMI
         mmi_data['MMI (chiffres romains)'] = [f'MMI {i}' for i in range(11)]  # Crée toutes les valeurs de MMI de 0 à 10
         mmi_data['Nombre de Sites Touchés'] = [sum(1 for mmi in mmi_sites if mmi == i) for i in range(11)]
-        mmi_data['Somme des Values (k€)'] = [round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == i) / 10**3, 1) for i in range(11)]
+        mmi_data['Insured Values'] = [round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == i) / 10**3, 1) for i in range(11)]
 
         # Afficher le DataFrame avec Streamlit
-        st.subheader("Tableau des données par MMI")
+        st.subheader("Repartition Values by Mercalli Intensity zone")
         st.write(mmi_data)
 
 
