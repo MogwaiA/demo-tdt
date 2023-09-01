@@ -190,7 +190,8 @@ def rapports_seismes():
             # Trier le DataFrame par ordre décroissant de MMI et sélectionner les 5 premiers
             top_sites = df.sort_values(by='MMI', ascending=True).head(5)
 
-            # Créer un tableau HTML pour ces 5 sites
+
+            # Créez une chaîne pour le contenu HTML du tableau
             html_table_top_sites = """
             <table>
             <tr>
@@ -201,23 +202,38 @@ def rapports_seismes():
                 <th>MMI</th>
                 <th>Valeur assurée (k€)</th>
             </tr>
+                {}
+            </table>
             """
 
-            for _, row in top_sites.iterrows():
-                html_table_top_sites += f"""
+            # Utilisez une boucle pour ajouter les lignes de données au tableau HTML
+            html_table_rows = ""
+            for site_data in top_sites:
+                html_table_row = """
                 <tr>
-                    <td>{row['Nom']}</td>
-                    <td>{row['Entite']}</td>
-                    <td>{row['Latitude']}</td>
-                    <td>{row['Longitude']}</td>
-                    <td>{row['MMI']}</td>
-                    <td>{row['TIV']} k€</td>
+                    <td>{}</td>
+                    <td>{}</td>
+                    <td>{}</td>
+                    <td>{}</td>
+                    <td>{}</td>
+                    <td>{:.1f} k€</td>
                 </tr>
-                """
+                """.format(
+                    site_data["Nom"],
+                    site_data["Entite"],
+                    site_data["Latitude"],
+                    site_data["Longitude"],
+                    site_data["MMI"],
+                    site_data["value"]
+                )
+                html_table_rows += html_table_row
 
-            html_table_top_sites += "</table>"
-            
+            # Insérez les lignes de données dans la chaîne de contenu HTML du tableau
+            html_table_top_sites = html_table_top_sites.format(html_table_rows)
+
+            # Affichez le tableau HTML dans Streamlit
             st.markdown(html_table_top_sites, unsafe_allow_html=True)
+
 
         
         # Créer un tableau HTML personnalisé transposé
