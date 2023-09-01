@@ -60,20 +60,33 @@ def rapports_seismes():
             st.pyplot(plt)
         
         with col2:
+
+            tri = st.selectbox(
+                "Trier les évènements par...",
+                ["MMI", "Magnitude", "Date"]
+            )
         
-            st.subheader("Évènements les plus importants")
+            st.subheader("Évènements")
 
             # Trier les événements par ordre décroissant du MMI
-            sorted_event_list = event_list.sort_values(by='properties.mmi', ascending=False)
+            tri_cle = {
+                "MMI": 'properties.mmi',
+                "Magnitude": 'properties.mag',
+                "Date": 'properties.time'
+            }
+
+            sorted_event_list = event_list.sort_values(by=tri_cle[tri], ascending=False)
 
             sorted_event_list_renamed = sorted_event_list.rename(
-                columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.url': 'Lien vers USGS'}
+                columns={'id': 'ID', 'properties.mmi': 'MMI', 'properties.mag': 'Magnitude', 'properties.url': 'Lien vers USGS'}
             )
+
+            sorted_event_list_renamed["Date"]=datetime.fromtimestamp(sorted_event_list_renamed["properties.time"]/1000).strftime('%Y-%m-%d %H:%M:%S')
 
             if len(sorted_event_list_renamed)<=10:
                 selected_radio_text = st.radio(
                     "Sélectionner un ID :",
-                    [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in sorted_event_list_renamed.iterrows()]
+                    [f"ID : {row['ID']} | MMI : {row['MMI']} | Magnitude : {row['Magnitude']} | Date : {row['Date']}" for _, row in sorted_event_list_renamed.iterrows()]
                 )
             else:
                 # Afficher les événements triés par lot de 10
@@ -87,7 +100,7 @@ def rapports_seismes():
 
                 selected_radio_text = st.radio(
                     "Sélectionner un ID :",
-                    [f"ID : {row['ID']} (MMI : {row['MMI']})" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
+                    [f"ID : {row['ID']} | MMI : {row['MMI']} | Magnitude : {row['Magnitude']} | Date : {row['Date']}" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
                 )
 
                 # Afficher la pagination
