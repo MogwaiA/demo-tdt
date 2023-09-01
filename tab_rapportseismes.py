@@ -81,7 +81,10 @@ def rapports_seismes():
                 columns={'id': 'ID', 'properties.mmi': 'MMI','properties.mag': 'Magnitude', 'properties.url': 'Lien vers USGS'}
             )
 
-            sorted_event_list_renamed["Date"]=datetime.fromtimestamp(sorted_event_list_renamed["properties.time"]/1000).strftime('%Y-%m-%d %H:%M:%S')
+            sorted_event_list_renamed["properties.time"] = pd.to_numeric(sorted_event_list_renamed["properties.time"], errors='coerce')
+
+            # Appliquez la conversion à toute la série
+            sorted_event_list_renamed["Date"] = sorted_event_list_renamed["properties.time"].apply(lambda timestamp: datetime.fromtimestamp(timestamp/1000).strftime('%Y-%m-%d %H:%M:%S'))
 
             if len(sorted_event_list_renamed)<=10:
                 selected_radio_text = st.radio(
