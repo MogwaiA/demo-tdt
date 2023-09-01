@@ -11,11 +11,11 @@ def rapports_seismes():
     st.markdown("<h3>Choisir une période :</h3>", unsafe_allow_html=True)
     period = st.selectbox(
         "Sélectionnez la période",
-        ["Un jour", "Trois jours", "Une semaine", "Un mois", "6 mois", "Un an","10 ans"]
+        ["Un jour", "Trois jours", "Une semaine", "Un mois", "6 mois", "Un an","10 ans","Depuis 1900"]
     )
 
     # Afficher le message d'avertissement
-    if period in ["Un mois", "6 mois", "Un an","10 ans"]:
+    if period in ["Un mois", "6 mois", "Un an","10 ans","Depuis 1900"]:
         st.warning("Attention : plus la période choisie est longue, plus le temps d'exécution sera élevé.")
 
     # Convertir la période en nombre de jours
@@ -27,11 +27,14 @@ def rapports_seismes():
         "6 mois": 180,
         "Un an": 365,
         "10 ans" : 3653
+        "Depuis 1900 (MMI 4 ou plus uniquement)" : -1
     }
+
     selected_days = period_days[period]
 
     st.write(f"Période sélectionnée : {period} ({selected_days} jour(s))")
-    
+    if selected_days==-1:
+        st.warning("Seuls les évènements avec un MMI supérieur ou égal à 4 sont disponibles.")
     event_list=download_list_event(selected_days)
 
     if len(event_list)>0:
