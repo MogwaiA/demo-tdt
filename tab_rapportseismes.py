@@ -63,11 +63,9 @@ def rapports_seismes():
 
             tri = st.selectbox(
                 "Trier les évènements par...",
-                ["MMI", "Magnitude"]
+                ["MMI", "Magnitude","Date"]
             )
         
-            st.subheader("Évènements")
-
             # Trier les événements par ordre décroissant du MMI
             tri_cle = {
                 "MMI": 'properties.mmi',
