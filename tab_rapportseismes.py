@@ -204,7 +204,49 @@ def rapports_seismes():
             <th>X+</th>
         </tr>
         <tr>
-            <td>Number of exposed sites</td>
+            <th>PERCEIVED SHAKING</th>
+            <th>Not exposed</th>
+            <th>Not felt</th>
+            <th>Weak</th>
+            <th>Weak</th>
+            <th>Light</th>
+            <th>Moderate</th>
+            <th>Strong</th>
+            <th>Very Strong</th>
+            <th>Severe</th>
+            <th>Violent</th>
+            <th>Extreme</th>
+        </tr>
+        <tr>
+            <td>POTENTIAL DAMAGE (Resistant Structures)</td>
+            <td>Not exposed</td>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+            <td>Very Light</td>
+            <td>Light</td>
+            <td>Moderate</td>
+            <td>Moderate to Heavy</td>
+            <td>Heavy</td>
+            <td>Very Heavy</td>
+        </tr>
+        <tr>
+            <td>POTENTIAL DAMAGE (Vulnerable Structures)</td>
+            <td>Not exposed</td>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+            <td>None</td>
+            <td>Light</td>
+            <td>Moderate</td>
+            <td>Moderate to Heavy</td>
+            <td>Heavy</td>
+            <td>Very Heavy</td>
+            <td>Very Heavy</td>
+        </tr>
+        <tr>
+            <td>NUMBER OF EXPOSED SITES</td>
             <td>{}</td>
             <td>{}</td>
             <td>{}</td>
@@ -218,7 +260,7 @@ def rapports_seismes():
             <td>{}</td>
         </tr>
         <tr>
-            <td>Insured Values (k€)</td>
+            <td>INSURED VALUES (k€)</td>
             <td>{}</td>
             <td>{}</td>
             <td>{}</td>
