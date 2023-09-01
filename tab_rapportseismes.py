@@ -30,7 +30,7 @@ def rapports_seismes():
     }
     selected_days = period_days[period]
 
-    st.write(f"Période sélectionnée : {period} ({selected_days} jours)")
+    st.write(f"Période sélectionnée : {period} ({selected_days} jour(s))")
     
     event_list=download_list_event(selected_days)
 
