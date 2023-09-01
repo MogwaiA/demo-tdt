@@ -104,6 +104,8 @@ def rapports_seismes():
         df = load_data(uploaded_file)
         liste_coordonnees = list(zip(df['Latitude'], df['Longitude']))
         values=list(df["TIV"])
+        noms=list(df["Nom"])
+        entites=list(df["Entite"])
 
         # Récupérer les informations des MMI du séisme
         event = link_xml_event(selected_id)
@@ -138,12 +140,12 @@ def rapports_seismes():
 
         # Ajouter les marqueurs pour les sites
 
-        for (lat, lon), mmi,value in zip(liste_coordonnees, mmi_sites,values):
+        for (lat, lon), mmi,value,nom,entite in zip(liste_coordonnees, mmi_sites,values,noms,entites):
 
             if mmi==0: 
-                popup_content='Hors de la zone sismique' 
+                popup_content=f'Site {nom}\n{entite}\nHors de la zone sismique' 
             else: 
-                popup_content = f'Site \nMMI : {mmi}\nTIV : {round(value/10**3,1)} k$'
+                popup_content = f'Site {nom}\n{entite}\nMMI : {mmi}\nTIV : {round(value/10**3,1)} k$'
             folium.Marker(
                 location=[lat, lon],
                 popup=popup_content,
