@@ -190,49 +190,8 @@ def rapports_seismes():
             # Trier le DataFrame par ordre décroissant de MMI et sélectionner les 5 premiers
             top_sites = df.sort_values(by='MMI', ascending=True).head(5)
 
-
-            # Créez une chaîne pour le contenu HTML du tableau
-            html_table_top_sites = """
-            <table>
-            <tr>
-                <th>Nom</th>
-                <th>Entité</th>
-                <th>Latitude</th>
-                <th>Longitude</th>
-                <th>MMI</th>
-                <th>Valeur assurée (k€)</th>
-            </tr>
-                {}
-            </table>
-            """
-
-            # Utilisez une boucle pour ajouter les lignes de données au tableau HTML
-            html_table_rows = ""
-            for _,row in top_sites.iterrows():
-                html_table_row = """
-                <tr>
-                    <td>{}</td>
-                    <td>{}</td>
-                    <td>{}</td>
-                    <td>{}</td>
-                    <td>{}</td>
-                    <td>{:.1f} k€</td>
-                </tr>
-                """.format(
-                    row["Nom"],
-                    row["Entite"],
-                    row["Latitude"],
-                    row["Longitude"],
-                    row["MMI"],
-                    row["value"]
-                )
-                html_table_rows += html_table_row
-
-            # Insérez les lignes de données dans la chaîne de contenu HTML du tableau
-            html_table_top_sites = html_table_top_sites.format(html_table_rows)
-
-            # Affichez le tableau HTML dans Streamlit
-            st.markdown(html_table_top_sites, unsafe_allow_html=True)
+            st.write(top_sites)
+        
 
 
         
