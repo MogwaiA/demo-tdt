@@ -182,7 +182,7 @@ def rapports_seismes():
         if n_sites_touches==0:
             folium_static(world_map)
         else:
-            st.write('<div style="display: flex; flex-direction: column;">', unsafe_allow_html=True)
+            st.write('<div style="display: flex; flex-direction: row;">', unsafe_allow_html=True)
             st.write('<div style="flex: 1;">', unsafe_allow_html=True)
             folium_static(world_map)
             st.write('</div>', unsafe_allow_html=True)
@@ -190,6 +190,7 @@ def rapports_seismes():
             st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h4>", unsafe_allow_html=True)
             st.write('</div>', unsafe_allow_html=True)
             st.write('</div>', unsafe_allow_html=True)
+
         
         # Créer un tableau HTML personnalisé transposé
         st.subheader("Repartition Values by Mercalli Intensity zone")
