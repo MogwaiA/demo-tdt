@@ -11,11 +11,11 @@ def rapports_seismes():
     st.markdown("<h3>Choisir une période :</h3>", unsafe_allow_html=True)
     period = st.selectbox(
         "Sélectionnez la période",
-        ["Un jour", "Trois jours", "Une semaine", "Un mois", "6 mois", "Un an","10 ans","Depuis 1900"]
+        ["Un jour", "Trois jours", "Une semaine", "Un mois", "6 mois", "Un an","10 ans","Depuis 1900 (MMI 4 ou plus uniquement)"]
     )
 
     # Afficher le message d'avertissement
-    if period in ["Un mois", "6 mois", "Un an","10 ans","Depuis 1900"]:
+    if period in ["Un mois", "6 mois", "Un an","10 ans","Depuis 1900 (MMI 4 ou plus uniquement)"]:
         st.warning("Attention : plus la période choisie est longue, plus le temps d'exécution sera élevé.")
 
     # Convertir la période en nombre de jours
