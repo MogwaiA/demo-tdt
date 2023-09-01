@@ -184,6 +184,8 @@ def rapports_seismes():
         # Créer un tableau HTML personnalisé transposé
         st.subheader("Repartition Values by Mercalli Intensity zone")
 
+        
+
         html_table = """
         <table>
         <tr>
@@ -198,7 +200,7 @@ def rapports_seismes():
             <th>VII</th>
             <th>VIII</th>
             <th>IX</th>
-            <th>X</th>
+            <th>X+</th>
         </tr>
         <tr>
             <td>Number of exposed sites</td>
@@ -231,27 +233,27 @@ def rapports_seismes():
         </table>
         """.format(
             sum(1 for mmi in mmi_sites if mmi == 0),
-            sum(1 for mmi in mmi_sites if mmi == 1),
-            sum(1 for mmi in mmi_sites if mmi == 2),
-            sum(1 for mmi in mmi_sites if mmi == 3),
-            sum(1 for mmi in mmi_sites if mmi == 4),
-            sum(1 for mmi in mmi_sites if mmi == 5),
-            sum(1 for mmi in mmi_sites if mmi == 6),
-            sum(1 for mmi in mmi_sites if mmi == 7),
-            sum(1 for mmi in mmi_sites if mmi == 8),
-            sum(1 for mmi in mmi_sites if mmi == 9),
-            sum(1 for mmi in mmi_sites if mmi == 10),
+            sum(1 for mmi in mmi_sites if (mmi>0 and mmi <= 1)),
+            sum(1 for mmi in mmi_sites if (mmi > 1 and mmi<=2)),
+            sum(1 for mmi in mmi_sites if (mmi > 2 and mmi<=3)),
+            sum(1 for mmi in mmi_sites if (mmi > 3 and mmi<=4)),
+            sum(1 for mmi in mmi_sites if (mmi > 4 and mmi<=5)),
+            sum(1 for mmi in mmi_sites if (mmi > 5 and mmi<=6)),
+            sum(1 for mmi in mmi_sites if (mmi > 6 and mmi<=7)),
+            sum(1 for mmi in mmi_sites if (mmi > 7 and mmi<=8)),
+            sum(1 for mmi in mmi_sites if (mmi > 8 and mmi<=9)),
+            sum(1 for mmi in mmi_sites if (mmi > 9)),
             round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 0) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 1) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 2) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 3) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 4) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 5) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 6) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 7) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 8) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 9) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 10) / 10**3, 1)
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>0 and mmi <= 1)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>1 and mmi <= 2)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>2 and mmi <= 3)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>3 and mmi <= 4)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>4 and mmi <= 5)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>5 and mmi <= 6)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>6 and mmi <= 7)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>7 and mmi <= 8)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>8 and mmi <= 9)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>9)) / 10**3, 1)
         )
 
         # Afficher le tableau HTML dans Streamlit
