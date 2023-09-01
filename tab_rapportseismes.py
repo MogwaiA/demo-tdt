@@ -191,6 +191,6 @@ def rapports_seismes():
         mmi_data = mmi_data.transpose()
         # Afficher le DataFrame avec Streamlit
         st.subheader("Repartition Values by Mercalli Intensity zone")
-        st.write(mmi_data)
+        st.write(mmi_data,index=False)
 
 
