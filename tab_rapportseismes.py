@@ -195,7 +195,6 @@ def rapports_seismes():
             html_table_top_sites = """
             <table>
                 <tr>
-                    <th>ID</th>
                     <th>Nom</th>
                     <th>Entité</th>
                     <th>Latitude</th>
@@ -208,7 +207,6 @@ def rapports_seismes():
             for _, row in top_sites.iterrows():
                 html_table_top_sites += f"""
                 <tr>
-                    <td>{row['ID']}</td>
                     <td>{row['Nom']}</td>
                     <td>{row['Entité']}</td>
                     <td>{row['Latitude']}</td>
