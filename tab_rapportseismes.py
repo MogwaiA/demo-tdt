@@ -125,6 +125,8 @@ def rapports_seismes():
 
         # Croiser entre le grid et la liste des sites observés
         mmi_sites=point_plus_proche(liste_coordonnees,grid_event)
+        n_sites_touches = sum(mmi > 0 for mmi in mmi_sites)
+        var = round(sum(value for mmi, value in zip(mmi_sites, values) if mmi > 0) / 10**3, 1)
 
         # Création de la map
         world_map = folium.Map(location=[center_lat, center_lon], zoom_start=5.3)
@@ -175,16 +177,22 @@ def rapports_seismes():
         st.title(title)
         st.subheader("Evènement du "+ str(date) +" de magnitude "+str(mag)+" de MMI "+str(round(mmi_event,1))+".")
 
-        # Afficher la carte Folium dans Streamlit
-        folium_static(world_map)
-        n_sites_touches = sum(mmi > 0 for mmi in mmi_sites)
-        var = round(sum(value for mmi, value in zip(mmi_sites, values) if mmi > 0) / 10**3, 1)
+        # Afficher la carte Folium dans Streamlit et un summary
+        
+        if n_sites_touches==0:
+            folium_static(world_map)
+        else:
+            col_1, col_2 = st.columns(2)
+            with col_1:
+                folium_static(world_map)
+            with col_2:
+                st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h1>", unsafe_allow_html=True)
+
 
         st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h1>", unsafe_allow_html=True)
         
         # Créer un tableau HTML personnalisé transposé
         st.subheader("Repartition Values by Mercalli Intensity zone")
-
         
 
         html_table = """
