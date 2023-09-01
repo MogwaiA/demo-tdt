@@ -32,9 +32,12 @@ def rapports_seismes():
 
     selected_days = period_days[period]
 
-    st.write(f"Période sélectionnée : {period} ({selected_days} jour(s))")
+    
     if selected_days==-1:
+        st.write(f"Période sélectionnée : {period}")
         st.warning("Seuls les évènements avec un MMI supérieur ou égal à 4 sont disponibles.")
+    else:
+        st.write(f"Période sélectionnée : {period} ({selected_days} jour(s))")
     event_list=download_list_event(selected_days)
 
     if len(event_list)>0:

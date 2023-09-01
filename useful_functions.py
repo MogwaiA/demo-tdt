@@ -132,8 +132,10 @@ def download_list_event(period,mmi=0):
     start_time_str = start_datetime.strftime('%Y-%m-%dT%H:%M:%S')
     end_time_str = current_datetime.strftime('%Y-%m-%dT%H:%M:%S')
 
-
-    response = requests.get(f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time_str}&endtime={end_time_str}&minmmi={mmi}")
+    if period>0:
+        response = requests.get(f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime={start_time_str}&endtime={end_time_str}&minmmi={mmi}")
+    else:
+        response = requests.get(f"https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=1900-01-01&minmmi=4")
     data = json.loads(response.text)
     df_event = pd.json_normalize(data["features"])
 
