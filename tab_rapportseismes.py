@@ -184,8 +184,7 @@ def rapports_seismes():
         else:
             col_1, col_2 = st.columns(2)
             with col_1:
-                iframe_html = f'<iframe srcdoc="{world_map.get_root().render()}" width="650" height="1200"></iframe>'
-                st.markdown(iframe_html, unsafe_allow_html=True)
+                folium_static(world_map, width=325, height=600)
             with col_2:
                 st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h1>", unsafe_allow_html=True)
 
