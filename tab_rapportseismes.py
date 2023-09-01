@@ -92,8 +92,7 @@ def rapports_seismes():
         selected_row = sorted_event_list_renamed[sorted_event_list_renamed['ID'] == selected_id].iloc[0]
         st.write("Lien vers USGS :")
         st.markdown(f"[{selected_row['Lien vers USGS']}]({selected_row['Lien vers USGS']})")
-
-
+        
         
     st.markdown("<h3 style='text-align: left;'>Sites à observer :</h3>", unsafe_allow_html=True)
 
@@ -189,7 +188,7 @@ def rapports_seismes():
         if n_sites_touches>0:
             st.subheader("5 most exposed sites")
             # Trier le DataFrame par ordre décroissant de MMI et sélectionner les 5 premiers
-            top_sites = df.sort_values(by='MMI', ascending=False).head(5)
+            top_sites = df.sort_values(by='MMI', ascending=True).head(5)
 
             # Créer un tableau HTML pour ces 5 sites
             html_table_top_sites = """
