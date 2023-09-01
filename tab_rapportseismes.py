@@ -193,8 +193,7 @@ def rapports_seismes():
             <th>MERCALLI INTENSITY</th>
             <th>Not exposed</th>
             <th>I</th>
-            <th>II</th>
-            <th>III</th>
+            <th>II-III</th>
             <th>IV</th>
             <th>V</th>
             <th>VI</th>
@@ -208,7 +207,6 @@ def rapports_seismes():
             <th>Not exposed</th>
             <th>Not felt</th>
             <th>Weak</th>
-            <th>Weak</th>
             <th>Light</th>
             <th>Moderate</th>
             <th>Strong</th>
@@ -220,7 +218,6 @@ def rapports_seismes():
         <tr>
             <td>POTENTIAL DAMAGE (Resistant Structures)</td>
             <td>Not exposed</td>
-            <td>None</td>
             <td>None</td>
             <td>None</td>
             <td>None</td>
@@ -237,7 +234,6 @@ def rapports_seismes():
             <td>None</td>
             <td>None</td>
             <td>None</td>
-            <td>None</td>
             <td>Light</td>
             <td>Moderate</td>
             <td>Moderate to Heavy</td>
@@ -247,7 +243,6 @@ def rapports_seismes():
         </tr>
         <tr>
             <td>NUMBER OF EXPOSED SITES</td>
-            <td>{}</td>
             <td>{}</td>
             <td>{}</td>
             <td>{}</td>
@@ -271,14 +266,12 @@ def rapports_seismes():
             <td>{}</td>
             <td>{}</td>
             <td>{}</td>
-            <td>{}</td>
         </tr>
         </table>
         """.format(
             sum(1 for mmi in mmi_sites if mmi == 0),
             sum(1 for mmi in mmi_sites if (mmi>0 and mmi <= 1)),
-            sum(1 for mmi in mmi_sites if (mmi > 1 and mmi<=2)),
-            sum(1 for mmi in mmi_sites if (mmi > 2 and mmi<=3)),
+            sum(1 for mmi in mmi_sites if (mmi > 1 and mmi<=3)),
             sum(1 for mmi in mmi_sites if (mmi > 3 and mmi<=4)),
             sum(1 for mmi in mmi_sites if (mmi > 4 and mmi<=5)),
             sum(1 for mmi in mmi_sites if (mmi > 5 and mmi<=6)),
@@ -288,8 +281,7 @@ def rapports_seismes():
             sum(1 for mmi in mmi_sites if (mmi > 9)),
             round(sum(value for mmi, value in zip(mmi_sites, values) if mmi == 0) / 10**3, 1),
             round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>0 and mmi <= 1)) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>1 and mmi <= 2)) / 10**3, 1),
-            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>2 and mmi <= 3)) / 10**3, 1),
+            round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>1 and mmi <= 3)) / 10**3, 1),
             round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>3 and mmi <= 4)) / 10**3, 1),
             round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>4 and mmi <= 5)) / 10**3, 1),
             round(sum(value for mmi, value in zip(mmi_sites, values) if (mmi>5 and mmi <= 6)) / 10**3, 1),
