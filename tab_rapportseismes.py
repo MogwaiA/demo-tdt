@@ -127,6 +127,7 @@ def rapports_seismes():
         mmi_sites=point_plus_proche(liste_coordonnees,grid_event)
         n_sites_touches = sum(mmi > 0 for mmi in mmi_sites)
         var = round(sum(value for mmi, value in zip(mmi_sites, values) if mmi > 0) / 10**3, 1)
+        df["MMI"]=mmi_sites
 
         # Création de la map
         world_map = folium.Map(location=[center_lat, center_lon], zoom_start=5.3)
@@ -179,21 +180,54 @@ def rapports_seismes():
 
         # Afficher la carte Folium dans Streamlit et un summary
         
-        if n_sites_touches==0:
-            folium_static(world_map)
-        else:
-            st.write('<div style="display: flex; flex-direction: row;">', unsafe_allow_html=True)
-            st.write('<div style="flex: 1;">', unsafe_allow_html=True)
-            folium_static(world_map)
-            st.write('</div>', unsafe_allow_html=True)
-            st.write('<div style="flex: 1; margin-left: 10px;">', unsafe_allow_html=True)
-            st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h4>", unsafe_allow_html=True)
-            st.write('</div>', unsafe_allow_html=True)
-            st.write('</div>', unsafe_allow_html=True)
+       
+        folium_static(world_map)
+       
 
         st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h4>", unsafe_allow_html=True)
-        
-        # Créer un tableau HTML personnalisé transposé
+
+        st.subheader("5 most exposed sites")
+        top_sites = df.sort_values(by='MMI', ascending=False).head(5)
+
+                
+        # Créer un tableau HTML pour afficher ces informations
+        html_table_top_sites = """
+        <table>
+            <tr>
+                <th>Site</th>
+                <th>Entité</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>MMI</th>
+                <th>Insured Value (k€)</th>
+            </tr>
+        """
+
+        for index, row in top_sites.iterrows():
+            site_name = row['Nom']
+            entite = row['Entite']
+            latitude = row['Latitude']
+            longitude = row['Longitude']
+            mmi = row['MMI']
+            insured_value = round(row['TIV'] / 10**3, 1)
+            
+            html_table_top_sites += f"""
+            <tr>
+                <td>{site_name}</td>
+                <td>{entite}</td>
+                <td>{latitude}</td>
+                <td>{longitude}</td>
+                <td>{mmi}</td>
+                <td>{insured_value} k€</td>
+            </tr>
+        """
+
+        html_table_top_sites += "</table>"
+
+        # Afficher le tableau HTML des 5 sites avec les MMI les plus élevées dans Streamlit
+        st.markdown(html_table_top_sites, unsafe_allow_html=True)
+ 
+    # Créer un tableau HTML personnalisé transposé
         st.subheader("Repartition Values by Mercalli Intensity zone")
         
 
