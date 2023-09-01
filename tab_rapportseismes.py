@@ -190,7 +190,6 @@ def rapports_seismes():
             st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h4>", unsafe_allow_html=True)
             st.write('</div>', unsafe_allow_html=True)
             st.write('</div>', unsafe_allow_html=True)
-            st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h1>", unsafe_allow_html=True)
         
         # Créer un tableau HTML personnalisé transposé
         st.subheader("Repartition Values by Mercalli Intensity zone")
