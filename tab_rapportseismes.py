@@ -15,8 +15,8 @@ def rapports_seismes():
     )
 
     # Afficher le message d'avertissement
-    if period in ["Un mois", "6 mois", "Un an","10 ans","Depuis 1900 (MMI 4 ou plus uniquement)"]:
-        st.warning("Attention : plus la période choisie est longue, plus le temps d'exécution sera élevé.")
+    #if period in ["Un mois", "6 mois", "Un an","10 ans","Depuis 1900 (MMI 4 ou plus uniquement)"]:
+    #    st.warning("Attention : plus la période choisie est longue, plus le temps d'exécution sera élevé.")
 
     # Convertir la période en nombre de jours
     period_days = {
