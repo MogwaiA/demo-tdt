@@ -207,7 +207,7 @@ def rapports_seismes():
                 html_table_top_sites += f"""
                 <tr>
                     <td>{row['Nom']}</td>
-                    <td>{row['Entité']}</td>
+                    <td>{row['Entite']}</td>
                     <td>{row['Latitude']}</td>
                     <td>{row['Longitude']}</td>
                     <td>{row['MMI']}</td>
