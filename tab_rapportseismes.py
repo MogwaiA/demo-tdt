@@ -190,7 +190,7 @@ def rapports_seismes():
             # Trier le DataFrame par ordre décroissant de MMI et sélectionner les 5 premiers
             top_sites = df.sort_values(by='MMI', ascending=True).head(5)
 
-            st.write(top_sites)
+            st.write(top_sites,index=False)
         
 
 
