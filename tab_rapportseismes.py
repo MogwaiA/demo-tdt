@@ -78,7 +78,7 @@ def rapports_seismes():
             sorted_event_list = event_list.sort_values(by=tri_cle[tri], ascending=False)
 
             sorted_event_list_renamed = sorted_event_list.rename(
-                columns={'id': 'ID', 'properties.mmi': 'MMI',"Date":"properties.time", 'properties.mag': 'Magnitude', 'properties.url': 'Lien vers USGS'}
+                columns={'id': 'ID', 'properties.mmi': 'MMI','properties.time':"Date", 'properties.mag': 'Magnitude', 'properties.url': 'Lien vers USGS'}
             )
 
            # sorted_event_list_renamed["Date"]=datetime.fromtimestamp(sorted_event_list_renamed["properties.time"]/1000).strftime('%Y-%m-%d %H:%M:%S')
