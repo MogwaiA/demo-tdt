@@ -193,14 +193,14 @@ def rapports_seismes():
             # Créer un tableau HTML pour ces 5 sites
             html_table_top_sites = """
             <table>
-                <tr>
-                    <th>Nom</th>
-                    <th>Entité</th>
-                    <th>Latitude</th>
-                    <th>Longitude</th>
-                    <th>MMI</th>
-                    <th>Valeur assurée (k€)</th>
-                </tr>
+            <tr>
+                <th>Nom</th>
+                <th>Entité</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+                <th>MMI</th>
+                <th>Valeur assurée (k€)</th>
+            </tr>
             """
 
             for _, row in top_sites.iterrows():
