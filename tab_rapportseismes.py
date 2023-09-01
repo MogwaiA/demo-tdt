@@ -180,14 +180,13 @@ def rapports_seismes():
         # Afficher la carte Folium dans Streamlit et un summary
         
         if n_sites_touches==0:
-            folium_static(world_map)
+             st.components.v1.html(world_map._repr_html_(), width=700, height=500)
         else:
             col_1, col_2 = st.columns(2)
             with col_1:
-                folium_static(world_map)
+                st.components.v1.html(world_map._repr_html_(), width=350, height=500)
             with col_2:
                 st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h1>", unsafe_allow_html=True)
-
 
         st.markdown(f"<h4 style='text-align: left;'>Tremblement de terre ayant touché {n_sites_touches} sites pour une valeur assurée totale de {var} k€ </h1>", unsafe_allow_html=True)
         
