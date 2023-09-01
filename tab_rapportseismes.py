@@ -110,7 +110,7 @@ def rapports_seismes():
                 st.write(f"Page {page} sur {num_pages}")
 
             # Extraire l'ID du texte sélectionné
-            selected_id = selected_radio_text.split(':')[1].split('(')[0].strip()
+            selected_id = selected_radio_text.split(':')[1].split('|')[0].strip()
 
             selected_row = sorted_event_list_renamed[sorted_event_list_renamed['ID'] == selected_id].iloc[0]
             st.write("Lien vers USGS :")
