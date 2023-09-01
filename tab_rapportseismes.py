@@ -217,7 +217,7 @@ def rapports_seismes():
 
             html_table_top_sites += "</table>"
             
-            st.write(html_table_top_sites, unsafe_allow_html=True)
+            st.markdown(html_table_top_sites, unsafe_allow_html=True)
 
         
         # Créer un tableau HTML personnalisé transposé
