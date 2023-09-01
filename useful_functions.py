@@ -109,7 +109,7 @@ def link_xml_event(id, proxies=None):
 
         # Accéder aux informations nécessaires dans la structure JSON
         url = data.get('properties', {}).get('products', {}).get('shakemap', [{}])[0].get('contents', {}).get('download/grid.xml', {}).get('url', None)
-        title=json.loads(response.text)['properties']["title"]
+        title=json.loads(response.text)['properties']["place"]
         time=json.loads(response.text)['properties']["time"]
         mag=json.loads(response.text)['properties']["mag"]
         mmi=json.loads(response.text)['properties']["mmi"]
