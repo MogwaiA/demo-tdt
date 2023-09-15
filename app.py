@@ -10,4 +10,4 @@ st.set_page_config(
     initial_sidebar_state="expanded",  # Barre latérale ouverte par défaut
 )
 
-rapports_seismes
+rapports_seismes()
