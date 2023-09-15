@@ -11,7 +11,7 @@ def rapports_seismes():
     st.markdown("<h3>Choisir une période :</h3>", unsafe_allow_html=True)
     period = st.selectbox(
         "Sélectionnez la période",
-        ["Un jour", "Trois jours", "Une semaine", "Un mois", "6 mois", "Un an","10 ans","Depuis 1900 (MMI 4 ou plus uniquement)"]
+        ["Une semaine", "Un mois", "6 mois", "Un an","10 ans","Depuis 1900 (MMI 4 ou plus uniquement)"]
     )
 
     # Afficher le message d'avertissement
@@ -20,8 +20,6 @@ def rapports_seismes():
 
     # Convertir la période en nombre de jours
     period_days = {
-        "Un jour": 1,
-        "Trois jours": 3,
         "Une semaine": 7,
         "Un mois": 30,
         "6 mois": 180,
@@ -45,18 +43,19 @@ def rapports_seismes():
 
         with col1:
             # Affichage d'une synthèse des données téléchargées
-            st.subheader("Histogramme du nombre d'id par mmi")
+            st.subheader("Répartition des évènements par sévérité")
             # Arrondir les valeurs de MMI
             event_list['rounded_mmi'] = event_list['properties.mmi'].round()
 
             # Calculer le nombre d'événements par valeur arrondie de MMI
             mmi_counts = event_list['rounded_mmi'].value_counts().sort_index()
+            etiquette = ["Not exposed","Not felt","Weak","Weak","Light","Moderate","Strong","Very Strong","Severe","Violent","Extreme"]
 
             # Créer l'histogramme
             plt.bar(mmi_counts.index, mmi_counts.values)
             plt.xlabel('MMI arrondi')
             plt.ylabel("Nombre d'événements")
-            plt.xticks(mmi_counts.index)  # Utiliser les valeurs arrondies comme étiquettes
+            plt.xticks(etiquette)  # Utiliser les valeurs arrondies comme étiquettes
             st.pyplot(plt)
         
         with col2:
