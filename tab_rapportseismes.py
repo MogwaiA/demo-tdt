@@ -52,10 +52,12 @@ def rapports_seismes():
             etiquette = ["Not exposed","Not felt","Weak","Weak","Light","Moderate","Strong","Very Strong","Severe","Violent","Extreme"]
 
             # Créer l'histogramme
+            xtick_positions = np.arange(len(etiquette))
+
             plt.bar(mmi_counts.index, mmi_counts.values)
             plt.xlabel('MMI arrondi')
             plt.ylabel("Nombre d'événements")
-            plt.xticks(mmi_counts.index, [etiquette[i] for i in mmi_counts.index], rotation=45)
+           plt.xticks(xtick_positions, etiquette, rotation=45)
             st.pyplot(plt)
         
         with col2:
