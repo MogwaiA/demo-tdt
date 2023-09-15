@@ -57,7 +57,7 @@ def rapports_seismes():
             plt.bar(mmi_counts.index, mmi_counts.values)
             plt.xlabel('MMI arrondi')
             plt.ylabel("Nombre d'événements")
-           plt.xticks(xtick_positions, etiquette, rotation=45)
+            plt.xticks(xtick_positions, etiquette, rotation=45)
             st.pyplot(plt)
         
         with col2:
