@@ -116,14 +116,14 @@ def rapports_seismes():
 
                 selected_radio_text = st.radio(
                     "Sélectionner un ID :",
-                    [f"ID : {row['ID']} | MMI : {row['MMI']} | Magnitude : {row['Magnitude']} | Date : {row['Date']}" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
+                    [f"{row['place']} | MMI : {row['MMI']} | Magnitude : {row['Magnitude']} | Date : {row['Date']} | row{'ID'}" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
                 )
 
                 # Afficher la pagination
                 st.write(f"Page {page} sur {num_pages}")
 
             # Extraire l'ID du texte sélectionné
-            selected_id = selected_radio_text.split(':')[1].split('|')[0].strip()
+            selected_id = selected_radio_text.split('|')[-1].strip()
 
             selected_row = sorted_event_list_renamed[sorted_event_list_renamed['ID'] == selected_id].iloc[0]
             st.write("Lien vers USGS :")
