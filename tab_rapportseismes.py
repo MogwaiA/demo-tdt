@@ -116,7 +116,7 @@ def rapports_seismes():
 
                 selected_radio_text = st.radio(
                     "Sélectionner un ID :",
-                    [f"{row['place']} | MMI : {row['MMI']} | Magnitude : {row['Magnitude']} | Date : {row['Date']}" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
+                    [f"ID : {row['ID']} | MMI : {row['MMI']} | Magnitude : {row['Magnitude']} | Date : {row['Date']}" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
                 )
 
                 # Afficher la pagination
