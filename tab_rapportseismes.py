@@ -225,9 +225,13 @@ def rapports_seismes():
 
             if n_sites_touches>0:
 
-                st.subheader("5 most exposed sites")
+                n_row_top_sites=min(5,n_sites_touches)
+                if n_sites_touches>5:
+                    st.subheader("5 most exposed sites")
+                else:
+                    st.subheader(f"All {n_row_top_sites} exposed sites")
                 # Trier le DataFrame par ordre décroissant de MMI et sélectionner les 5 premiers
-                n_row_top_sites=max(5,n_sites_touches)
+                
                 top_sites = df.sort_values(by='MMI', ascending=False).head(n_row_top_sites)
                 top_sites["TIV"]=round(top_sites["TIV"],2)
 
