@@ -91,7 +91,7 @@ def rapports_seismes():
             sorted_event_list = event_list.sort_values(by=tri_cle[tri], ascending=ordre_cle[ordre])
 
             sorted_event_list_renamed = sorted_event_list.rename(
-                columns={'id': 'ID', 'properties.mmi': 'MMI','properties.mag': 'Magnitude', 'properties.url': 'Lien vers USGS'}
+                columns={'id': 'ID','properties.place':'place', 'properties.mmi': 'MMI','properties.mag': 'Magnitude', 'properties.url': 'Lien vers USGS'}
             )
 
             sorted_event_list_renamed["properties.time"] = pd.to_numeric(sorted_event_list_renamed["properties.time"], errors='coerce')
@@ -116,7 +116,7 @@ def rapports_seismes():
 
                 selected_radio_text = st.radio(
                     "Sélectionner un ID :",
-                    [f"ID : {row['ID']} | MMI : {row['MMI']} | Magnitude : {row['Magnitude']} | Date : {row['Date']}" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
+                    [f"{row['place']} | Magnitude : {row['Magnitude']} | Date : {row['Date']}" for _, row in sorted_event_list_renamed[start_idx:end_idx].iterrows()]
                 )
 
                 # Afficher la pagination
