@@ -55,7 +55,7 @@ def rapports_seismes():
             xtick_positions = np.arange(len(etiquette))
 
             plt.bar(mmi_counts.index, mmi_counts.values)
-            plt.xlabel('MMI arrondi')
+            plt.xlabel('Sévérité (MMI)')
             plt.ylabel("Nombre d'événements")
             plt.xticks(xtick_positions, etiquette, rotation=45)
             st.pyplot(plt)
